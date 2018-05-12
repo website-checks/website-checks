@@ -1,0 +1,35 @@
+[
+    {
+        "name": "SSL Labs"
+    },
+    {
+        "name": "SecurityHeaders"
+    },
+    {
+        "name": "Pagespeed Insights"
+    },
+    {
+        "name": "Sonarwhal"
+    },
+    {
+        "name": "Lighthouse"
+    },
+    {
+        "name": "hstspreload"
+    },
+    {
+        "name": "webpagetest"
+    },
+    {
+        "name": "tls.imirhil.fr"
+    },
+    {
+        "name": "ssldecoder.org"
+    },
+    {
+        "name": "Mozilla Observatory"
+    },
+    {
+        "name": "ssldecoder.org"
+    }
+]
