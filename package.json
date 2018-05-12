@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/DanielRuf/website-checks/issues"
   },
-  "homepage": "https://github.com/DanielRuf/website-checks#readme"
+  "homepage": "https://github.com/DanielRuf/website-checks#readme",
+  "dependencies": {
+    "puppeteer": "^1.4.0"
+  }
 }
