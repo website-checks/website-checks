@@ -10,6 +10,7 @@ const url = process.argv[2];
 (async() => {
   const browser = await puppeteer.launch({headless: false})
   const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
   let warning
   let intervalID
   await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
