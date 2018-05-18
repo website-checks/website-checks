@@ -21,15 +21,14 @@ async function ssllabs() {
   let warning
   let intervalID
   await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
-  try {
-    await page.waitForSelector('#warningBox', {timeout:1000})
-  } catch(err){
-    await goOn()
-    return
-  }
+  
   try {
     warning = await page.evaluate('document.querySelector("#warningBox")')
   } catch(err) {}
+  if(!warning){
+    await goOn()
+    return
+  }
 
   intervalID = setInterval(async ()=>{
     try{
@@ -60,13 +59,52 @@ async function ssllabs() {
 async function securityheaders(){
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://securityheaders.com/?q='+url+'&hide=on&followRedirects=on')
   await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
   await browser.close()
 }
 
+async function psi(){
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  let intervalID
+  await page.goto('https://developers.google.com/speed/pagespeed/insights/?url='+url+'&tab=mobile')
+
+  try {
+    warning = await page.evaluate('document.querySelector("#page-speed-insights .pagespeed-results .result-tabs")')
+  } catch(err) {}
+  if(!warning){
+    await goOn()
+    return
+  }
+
+  intervalID = setInterval(async ()=>{
+    try{
+      warning = await page.evaluate('document.querySelector("#page-speed-insights .pagespeed-results .result-tabs")')
+    } catch(err){}
+    if(!warning){
+      await goOn()
+      return
+    }
+  }, 5000)
+
+  async function goOn(){
+    if(intervalID)clearInterval(intervalID)
+    await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(1)')
+    await page.pdf({path: './psi-mobile.pdf', format: 'A4', printBackground: true})
+    await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
+    await page.pdf({path: './psi-desktop.pdf', format: 'A4', printBackground: true})
+    await browser.close()
+  }
+}
+
+//https://developers.google.com/speed/pagespeed/insights/?url=example.com&tab=mobile
+
 ssllabs()
 securityheaders()
+psi()
 
 // @todo: logic
 // page.goto(SERVICE_ENDPOINT_URL)
