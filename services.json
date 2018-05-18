@@ -1,14 +1,5 @@
 [
     {
-        "name": "SSL Labs"
-    },
-    {
-        "name": "SecurityHeaders"
-    },
-    {
-        "name": "Pagespeed Insights"
-    },
-    {
         "name": "Sonarwhal"
     },
     {
@@ -22,6 +13,9 @@
     },
     {
         "name": "tls.imirhil.fr"
+    },
+    {
+        "name": "crt.sh"
     },
     {
         "name": "ssldecoder.org"
