@@ -14,7 +14,7 @@ if(!process.argv[2]) {
   return
 }
 
-(async() => {
+async function ssllabs() {
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -47,7 +47,7 @@ if(!process.argv[2]) {
     const linksLength = links.length
     for(let i = 0; i < linksLength; i++){
       await page.goto(links[i])
-      await page.pdf({path: './pdf-'+i+'.pdf', format: 'A4', printBackground: true})
+      await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
     }
     await browser.close()
   }
@@ -55,7 +55,18 @@ if(!process.argv[2]) {
   // await page.type('.submitBox input[type="text"][name="d"]', 'https://google.com', {delay: 100});
   // await page.click('#hideResults')
   // await page.click('.submitBox input[type="submit"]');
-})()
+}
+
+async function securityheaders(){
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page.goto('https://securityheaders.com/?q='+url+'&hide=on&followRedirects=on')
+  await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
+  await browser.close()
+}
+
+ssllabs()
+securityheaders()
 
 // @todo: logic
 // page.goto(SERVICE_ENDPOINT_URL)
