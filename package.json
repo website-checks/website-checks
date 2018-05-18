@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/DanielRuf/website-checks#readme",
   "dependencies": {
+    "chalk": "^2.4.1",
     "puppeteer": "^1.4.0"
   }
 }
