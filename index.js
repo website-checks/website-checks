@@ -15,6 +15,8 @@ if(!process.argv[2]) {
 }
 
 async function lighthouse(){
+  const name = 'Lighthouse'
+  console.log(chalk.green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -25,14 +27,19 @@ async function lighthouse(){
     await page.waitForSelector('body.done',{timeout:60000})
   } catch(err){
     await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
   }
   const link = await page.evaluate(() => document.querySelector('#reportLink').href)
   await page.goto(link)
   await page.pdf({path: './lighthouse.pdf', format: 'A4', printBackground: true})
   await browser.close()
+  console.log(chalk.green('[done] ' + name))
 }
 
 async function psi(){
+  const name = 'PageSpeed Insights'
+  console.log(chalk.green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -41,24 +48,32 @@ async function psi(){
     await page.waitForSelector('#page-speed-insights .pagespeed-results .result-tabs',{timeout:60000})
   } catch(err){
     await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
   }
   await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(1)')
   await page.pdf({path: './psi-mobile.pdf', format: 'A4', printBackground: true})
   await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
   await page.pdf({path: './psi-desktop.pdf', format: 'A4', printBackground: true})
   await browser.close()
+  console.log(chalk.green('[done] ' + name))
 }
 
 async function securityheaders(){
+  const name = 'SecurityHeaders'
+  console.log(chalk.green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://securityheaders.com/?q='+url+'&hide=on&followRedirects=on')
   await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
   await browser.close()
+  console.log(chalk.green('[done] ' + name))
 }
 
 async function ssllabs() {
+  const name = 'SSLLabs'
+  console.log(chalk.green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -67,6 +82,8 @@ async function ssllabs() {
     await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:240000})
   } catch(err){
     await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
   }
   const links = await page.evaluate(() => [...document.querySelectorAll('#multiTable a')].map(link => link.href))
   const linksLength = links.length
@@ -75,6 +92,7 @@ async function ssllabs() {
     await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
   }
   await browser.close()
+  console.log(chalk.green('[done] ' + name))
 }
 
 lighthouse()
