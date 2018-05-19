@@ -2,6 +2,7 @@
   "name": "website-checks",
   "version": "1.1.1",
   "main": "index.js",
+  "description": "checks websites with multiple services",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -9,7 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/DanielRuf/website-checks.git"
   },
-  "keywords": [],
+  "keywords": [
+    "lighthouse",
+    "pagespeed insights",
+    "psi",
+    "security headers",
+    "ssllabs"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -19,7 +26,5 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "puppeteer": "^1.4.0"
-  },
-  "devDependencies": {},
-  "description": ""
+  }
 }
