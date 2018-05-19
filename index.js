@@ -14,31 +14,21 @@ if(!process.argv[2]) {
   return
 }
 
-async function ssllabs() {
+async function lighthouse(){
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
+  await page.goto('https://lighthouse-ci.appspot.com/try')
+  await page.type('#url', url)
+  await page.click('.url-section .search-arrow')
   try {
-    await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:240000})
+    await page.waitForSelector('body.done',{timeout:60000})
   } catch(err){
     await browser.close()
   }
-  const links = await page.evaluate(() => [...document.querySelectorAll('#multiTable a')].map(link => link.href))
-  const linksLength = links.length
-  for(let i = 0; i < linksLength; i++){
-    await page.goto(links[i])
-    await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
-  }
-  await browser.close()
-}
-
-async function securityheaders(){
-  const browser = await puppeteer.launch({headless: true})
-  const page = await browser.newPage()
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://securityheaders.com/?q='+url+'&hide=on&followRedirects=on')
-  await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
+  const link = await page.evaluate(() => document.querySelector('#reportLink').href)
+  await page.goto(link)
+  await page.pdf({path: './lighthouse.pdf', format: 'A4', printBackground: true})
   await browser.close()
 }
 
@@ -59,25 +49,35 @@ async function psi(){
   await browser.close()
 }
 
-async function lighthouse(){
+async function securityheaders(){
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://lighthouse-ci.appspot.com/try')
-  await page.type('#url', url)
-  await page.click('.url-section .search-arrow')
-  try {
-    await page.waitForSelector('body.done',{timeout:60000})
-  } catch(err){
-    await browser.close()
-  }
-  const link = await page.evaluate(() => document.querySelector('#reportLink').href)
-  await page.goto(link)
-  await page.pdf({path: './lighthouse.pdf', format: 'A4', printBackground: true})
+  await page.goto('https://securityheaders.com/?q='+url+'&hide=on&followRedirects=on')
+  await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
   await browser.close()
 }
 
+async function ssllabs() {
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
+  try {
+    await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:240000})
+  } catch(err){
+    await browser.close()
+  }
+  const links = await page.evaluate(() => [...document.querySelectorAll('#multiTable a')].map(link => link.href))
+  const linksLength = links.length
+  for(let i = 0; i < linksLength; i++){
+    await page.goto(links[i])
+    await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
+  }
+  await browser.close()
+}
+
+lighthouse()
+psi()
 ssllabs()
 securityheaders()
-psi()
-lighthouse()
