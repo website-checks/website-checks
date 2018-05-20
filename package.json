@@ -11,6 +11,8 @@
     "url": "git+https://github.com/DanielRuf/website-checks.git"
   },
   "keywords": [
+    "hsts",
+    "hsts preload",
     "lighthouse",
     "pagespeed insights",
     "psi",
