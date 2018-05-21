@@ -3,6 +3,7 @@
 `website-checks` checks websites with multiple services.
 
 These are currently:
+* crt.sh
 * HSTS Preload List
 * Ligthouse
 * PageSpeed Insights

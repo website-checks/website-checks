@@ -14,6 +14,18 @@ if(!process.argv[2]) {
   return
 }
 
+async function crtsh(){
+  const name = 'crt.sh'
+  console.log(chalk.green('[started] ' + name))
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  await page.goto('https://crt.sh/?q='+url)
+  await page.pdf({path: './crtsh.pdf', format: 'A4', printBackground: true})
+  await browser.close()
+  console.log(chalk.green('[done] ' + name))
+}
+
 async function hstspreload() {
   const name = 'HSTS Preload List'
   console.log(chalk.green('[started] ' + name))
@@ -114,6 +126,7 @@ async function ssllabs() {
   console.log(chalk.green('[done] ' + name))
 }
 
+crtsh()
 hstspreload()
 lighthouse()
 psi()
