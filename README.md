@@ -8,6 +8,7 @@ These are currently:
 * Ligthouse
 * PageSpeed Insights
 * Security Headers
+* SSL Decoder
 * SSLLabs
 
 ## Installation

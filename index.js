@@ -20,7 +20,7 @@ async function crtsh(){
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://crt.sh/?q='+url)
+  await page.goto('https://crt.sh/?q=' + url)
   await page.pdf({path: './crtsh.pdf', format: 'A4', printBackground: true})
   await browser.close()
   console.log(chalk.green('[done] ' + name))
@@ -74,7 +74,7 @@ async function psi(){
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://developers.google.com/speed/pagespeed/insights/?url='+url+'&tab=mobile')
+  await page.goto('https://developers.google.com/speed/pagespeed/insights/?url=' + url + '&tab=mobile')
   try {
     await page.waitForSelector('#page-speed-insights .pagespeed-results .result-tabs',{timeout:60000})
   } catch(err){
@@ -96,8 +96,33 @@ async function securityheaders(){
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://securityheaders.com/?q='+url+'&hide=on&followRedirects=on')
+  await page.goto('https://securityheaders.com/?q=' + url + '&hide=on&followRedirects=on')
   await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
+  await browser.close()
+  console.log(chalk.green('[done] ' + name))
+}
+
+async function ssldecoder() {
+  const name = 'SSL Decoder'
+  console.log(chalk.green('[started] ' + name))
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  await page.goto('https://ssldecoder.org/?host=' + url)
+  const links = await page.evaluate(() => [...document.querySelectorAll('#choose_endpoint a')].map(link => link.href))
+  const linksLength = links.length
+  if(linksLength){
+    for(let i = 0; i < linksLength; i++){
+      await page.goto(links[i])
+      await page.emulateMedia('screen')
+      await page.pdf({path: './ssldecoder-'+i+'.pdf', format: 'A4', printBackground: true})
+    }
+    await browser.close()
+    console.log(chalk.green('[done] ' + name))
+    return
+  }
+  await page.emulateMedia('screen')
+  await page.pdf({path: './ssldecoder.pdf', format: 'A4', printBackground: true})
   await browser.close()
   console.log(chalk.green('[done] ' + name))
 }
@@ -130,5 +155,6 @@ crtsh()
 hstspreload()
 lighthouse()
 psi()
+ssldecoder()
 ssllabs()
 securityheaders()
