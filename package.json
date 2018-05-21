@@ -12,6 +12,7 @@
   },
   "keywords": [
     "certificate",
+    "cryptcheck",
     "hsts",
     "hsts preload",
     "lighthouse",

@@ -4,6 +4,7 @@
 
 These are currently:
 * crt.sh
+* CryptCheck
 * HSTS Preload List
 * Ligthouse
 * PageSpeed Insights
