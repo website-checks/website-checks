@@ -33,6 +33,13 @@ async function cryptcheck() {
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://tls.imirhil.fr/https/' + url)
+  try {
+    await page.waitForFunction('!document.querySelector("meta[http-equiv=\'refresh\']")',{timeout:30000})
+  } catch(err){
+    await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
+  }
   await page.evaluate(() => document.querySelector('header').style.display = 'none')
   await page.emulateMedia('screen')
   await page.pdf({path: './cryptcheck.pdf', format: 'A4', printBackground: true})
@@ -122,7 +129,7 @@ async function ssldecoder() {
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://ssldecoder.org/?host=' + url)
+  await page.goto('https://ssldecoder.org/?host=' + url,{timeout:240000})
   const links = await page.evaluate(() => [...document.querySelectorAll('#choose_endpoint a')].map(link => link.href))
   const linksLength = links.length
   if(linksLength){
@@ -170,6 +177,6 @@ cryptcheck()
 hstspreload()
 lighthouse()
 psi()
+securityheaders()
 ssldecoder()
 ssllabs()
-securityheaders()
