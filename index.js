@@ -143,6 +143,38 @@ async function securityheaders(){
   console.log(chalk.green('[done] ' + name))
 }
 
+async function sonarwhal(){
+  const name = 'sonarwhal'
+  console.log(chalk.green('[started] ' + name))
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  await page.goto('https://sonarwhal.com/scanner/')
+  await page.type('#home-scan', url)
+  await page.click('.home-container--input button[type="submit"]')
+  await page.waitFor(1000)
+  try {
+    await page.waitForSelector('.scan-overview__status',{timeout:30000,visible:true})
+  } catch(err){
+    await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
+  }
+  await page.waitFor(1000)
+  try {
+    await page.waitForFunction('!document.querySelector(".scan-overview__status.analyzing")',{timeout:180000})
+  } catch(err){
+    await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
+  }
+  await page.waitFor(1000)
+  await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
+  await page.pdf({path: './sonarwhal.pdf', format: 'A4', printBackground: true})
+  await browser.close()
+  console.log(chalk.green('[done] ' + name))
+}
+
 async function ssldecoder() {
   const name = 'SSL Decoder'
   console.log(chalk.green('[started] ' + name))
@@ -199,5 +231,6 @@ httpobservatory()
 lighthouse()
 psi()
 securityheaders()
+sonarwhal()
 ssldecoder()
 ssllabs()

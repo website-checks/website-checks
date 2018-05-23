@@ -10,6 +10,7 @@ These are currently:
 * Ligthouse
 * PageSpeed Insights
 * Security Headers
+* sonarwhal
 * SSL Decoder
 * SSLLabs
 
