@@ -19,6 +19,7 @@
     "cryptcheck",
     "hsts",
     "hsts preload",
+    "http observatory",
     "lighthouse",
     "pagespeed insights",
     "psi",

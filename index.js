@@ -66,6 +66,26 @@ async function hstspreload() {
   console.log(chalk.green('[done] ' + name))
 }
 
+async function httpobservatory() {
+  const name = 'HTTP Observatory'
+  console.log(chalk.green('[started] ' + name))
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  await page.goto('https://observatory.mozilla.org/analyze/' + url + '&third-party=false', {waitUntil: 'networkidle0'})
+  try {
+    await page.waitForFunction('!document.querySelector("#scan-progress-bar")',{timeout:240000})
+  } catch(err){
+    await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
+  }
+  await page.emulateMedia('screen')
+  await page.pdf({path: './httpobservatory.pdf', scale: 0.75, format: 'A4', printBackground: true})
+  await browser.close()
+  console.log(chalk.green('[done] ' + name))
+}
+
 async function lighthouse(){
   const name = 'Lighthouse'
   console.log(chalk.green('[started] ' + name))
@@ -175,6 +195,7 @@ async function ssllabs() {
 crtsh()
 cryptcheck()
 hstspreload()
+httpobservatory()
 lighthouse()
 psi()
 securityheaders()

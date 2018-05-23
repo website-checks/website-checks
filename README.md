@@ -6,6 +6,7 @@ These are currently:
 * crt.sh
 * CryptCheck
 * HSTS Preload List
+* HTTP Observatory
 * Ligthouse
 * PageSpeed Insights
 * Security Headers
