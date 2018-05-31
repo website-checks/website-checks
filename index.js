@@ -1,11 +1,10 @@
+const puppeteer = require('puppeteer')
+const chalk = require('chalk')
+const devices = require('puppeteer/DeviceDescriptors')
 const pkg = require('./package.json')
 
 console.log(pkg.name + ' ' + pkg.version)
 
-
-const puppeteer = require('puppeteer')
-const chalk = require('chalk')
-const devices = require('puppeteer/DeviceDescriptors')
 const url = process.argv[2]
 
 if(!process.argv[2]) {
