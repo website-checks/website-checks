@@ -7,7 +7,7 @@ These are currently:
 * CryptCheck
 * HSTS Preload List
 * HTTP Observatory
-* Ligthouse
+* Lightouse
 * PageSpeed Insights
 * Security Headers
 * sonarwhal
