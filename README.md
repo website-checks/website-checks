@@ -13,6 +13,7 @@ These are currently:
 * sonarwhal
 * SSL Decoder
 * SSLLabs
+* webbkoll
 
 ## Installation
 

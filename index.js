@@ -223,6 +223,25 @@ async function ssllabs() {
   console.log(chalk.green('[done] ' + name))
 }
 
+async function webbkoll() {
+  const name = 'webbkoll'
+  console.log(chalk.green('[started] ' + name))
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  await page.goto('https://webbkoll.dataskydd.net/en/check?url='+url+'&refresh=on')
+  try {
+    await page.waitForFunction('window.location.href.startsWith("https://webbkoll.dataskydd.net/en/results")',{timeout:240000})
+  } catch(err){
+    await browser.close()
+    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    return
+  }
+  await page.pdf({path: './webbkoll.pdf', format: 'A4', printBackground: true})
+  await browser.close()
+  console.log(chalk.green('[done] ' + name))
+}
+
 crtsh()
 cryptcheck()
 hstspreload()
@@ -233,3 +252,4 @@ securityheaders()
 sonarwhal()
 ssldecoder()
 ssllabs()
+webbkoll()
