@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer')
-const chalk = require('chalk')
+const { red, green } = require('kleur');
 const devices = require('puppeteer/DeviceDescriptors')
 const pkg = require('./package.json')
 
@@ -8,26 +8,26 @@ console.log(pkg.name + ' ' + pkg.version)
 const url = process.argv[2]
 
 if(!process.argv[2]) {
-  console.log(chalk.red('No website was provided.'))
+  console.log(red('No website was provided.'))
   process.exit(1)
   return
 }
 
 async function crtsh(){
   const name = 'crt.sh'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://crt.sh/?q=' + url)
   await page.pdf({path: './crtsh.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function cryptcheck() {
   const name = 'CryptCheck'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true, args: ['--lang=en']})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -36,19 +36,19 @@ async function cryptcheck() {
     await page.waitForFunction('!document.querySelector("meta[http-equiv=\'refresh\']")',{timeout:30000})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   await page.evaluate(() => document.querySelector('header').style.display = 'none')
   await page.emulateMedia('screen')
   await page.pdf({path: './cryptcheck.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function hstspreload() {
   const name = 'HSTS Preload List'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -57,17 +57,17 @@ async function hstspreload() {
     await page.waitForSelector('#result',{timeout:30000,visible:true})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   await page.pdf({path: './hstspreload.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function httpobservatory() {
   const name = 'HTTP Observatory'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -76,18 +76,18 @@ async function httpobservatory() {
     await page.waitForFunction('!document.querySelector("#scan-progress-bar")',{timeout:240000})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   await page.emulateMedia('screen')
   await page.pdf({path: './httpobservatory.pdf', scale: 0.75, format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function lighthouse(){
   const name = 'Lighthouse'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -98,19 +98,19 @@ async function lighthouse(){
     await page.waitForSelector('body.done',{timeout:60000})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   const link = await page.evaluate(() => document.querySelector('#reportLink').href)
   await page.goto(link)
   await page.pdf({path: './lighthouse.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function psi(){
   const name = 'PageSpeed Insights'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -119,7 +119,7 @@ async function psi(){
     await page.waitForSelector('#page-speed-insights .pagespeed-results .result-tabs',{timeout:60000})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(1)')
@@ -127,24 +127,24 @@ async function psi(){
   await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
   await page.pdf({path: './psi-desktop.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function securityheaders(){
   const name = 'SecurityHeaders'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://securityheaders.com/?q=' + url + '&hide=on&followRedirects=on')
   await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function sonarwhal(){
   const name = 'sonarwhal'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -156,7 +156,7 @@ async function sonarwhal(){
     await page.waitForSelector('.scan-overview__status',{timeout:30000,visible:true})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   await page.waitFor(1000)
@@ -164,19 +164,19 @@ async function sonarwhal(){
     await page.waitForFunction('!document.querySelector(".scan-overview__status.analyzing")',{timeout:180000})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   await page.waitFor(1000)
   await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
   await page.pdf({path: './sonarwhal.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function ssldecoder() {
   const name = 'SSL Decoder'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -190,18 +190,18 @@ async function ssldecoder() {
       await page.pdf({path: './ssldecoder-'+i+'.pdf', format: 'A4', printBackground: true})
     }
     await browser.close()
-    console.log(chalk.green('[done] ' + name))
+    console.log(green('[done] ' + name))
     return
   }
   await page.emulateMedia('screen')
   await page.pdf({path: './ssldecoder.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function ssllabs() {
   const name = 'SSLLabs'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -210,7 +210,7 @@ async function ssllabs() {
     await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:240000})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   const links = await page.evaluate(() => [...document.querySelectorAll('#multiTable a')].map(link => link.href))
@@ -220,12 +220,12 @@ async function ssllabs() {
     await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
   }
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 async function webbkoll() {
   const name = 'webbkoll'
-  console.log(chalk.green('[started] ' + name))
+  console.log(green('[started] ' + name))
   const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
@@ -234,12 +234,12 @@ async function webbkoll() {
     await page.waitForFunction('window.location.href.startsWith("https://webbkoll.dataskydd.net/en/results")',{timeout:240000})
   } catch(err){
     await browser.close()
-    console.log(chalk.red('[error] ' + name), chalk.red(err))
+    console.log(red('[error] ' + name), red(err))
     return
   }
   await page.pdf({path: './webbkoll.pdf', format: 'A4', printBackground: true})
   await browser.close()
-  console.log(chalk.green('[done] ' + name))
+  console.log(green('[done] ' + name))
 }
 
 crtsh()

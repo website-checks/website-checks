@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/DanielRuf/website-checks#readme",
   "dependencies": {
-    "chalk": "^2.4.1",
+    "kleur": "^3.0.1",
     "puppeteer": "^1.4.0"
   }
 }
