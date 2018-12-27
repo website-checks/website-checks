@@ -142,38 +142,6 @@ async function securityheaders(){
   console.log(green('[done] ' + name))
 }
 
-async function sonarwhal(){
-  const name = 'sonarwhal'
-  console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
-  const page = await browser.newPage()
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://sonarwhal.com/scanner/')
-  await page.type('#home-scan', url)
-  await page.click('.home-container--input button[type="submit"]')
-  await page.waitFor(1000)
-  try {
-    await page.waitForSelector('.scan-overview__status',{timeout:30000,visible:true})
-  } catch(err){
-    await browser.close()
-    console.log(red('[error] ' + name), red(err))
-    return
-  }
-  await page.waitFor(1000)
-  try {
-    await page.waitForFunction('!document.querySelector(".scan-overview__status.analyzing")',{timeout:180000})
-  } catch(err){
-    await browser.close()
-    console.log(red('[error] ' + name), red(err))
-    return
-  }
-  await page.waitFor(1000)
-  await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
-  await page.pdf({path: './sonarwhal.pdf', format: 'A4', printBackground: true})
-  await browser.close()
-  console.log(green('[done] ' + name))
-}
-
 async function ssldecoder() {
   const name = 'SSL Decoder'
   console.log(green('[started] ' + name))
@@ -242,6 +210,38 @@ async function webbkoll() {
   console.log(green('[done] ' + name))
 }
 
+async function webhint(){
+  const name = 'webhint'
+  console.log(green('[started] ' + name))
+  const browser = await puppeteer.launch({headless: true})
+  const page = await browser.newPage()
+  await page._client.send('Emulation.clearDeviceMetricsOverride')
+  await page.goto('https://webhint.io/scanner/')
+  await page.type('#scanner-page-scan', url)
+  await page.click('#scanner-page-scan + button[type="submit"]')
+  await page.waitFor(1000)
+  try {
+    await page.waitForSelector('.scan-overview__status',{timeout:30000,visible:true})
+  } catch(err){
+    await browser.close()
+    console.log(red('[error] ' + name), red(err))
+    return
+  }
+  await page.waitFor(1000)
+  try {
+    await page.waitForFunction('document.querySelector(".scan-overview__progress-bar.end-animation")',{timeout:240000})
+  } catch(err){
+    await browser.close()
+    console.log(red('[error] ' + name), red(err))
+    return
+  }
+  await page.waitFor(1000)
+  await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
+  await page.pdf({path: './webhint.pdf', format: 'A4', printBackground: true})
+  await browser.close()
+  console.log(green('[done] ' + name))
+}
+
 crtsh()
 cryptcheck()
 hstspreload()
@@ -249,7 +249,7 @@ httpobservatory()
 lighthouse()
 psi()
 securityheaders()
-sonarwhal()
 ssldecoder()
 ssllabs()
 webbkoll()
+webhint()
