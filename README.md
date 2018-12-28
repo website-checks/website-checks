@@ -10,14 +10,17 @@ These are currently:
 * Lightouse
 * PageSpeed Insights
 * Security Headers
-* sonarwhal
 * SSL Decoder
 * SSLLabs
 * webbkoll
+* webhint
 
 ## Installation
 
-`npm i -g website-checks`
+```
+npm i -g danielruf/website-checks
+yarn global add danielruf/website-checks
+```
 
 ## Usage
 
