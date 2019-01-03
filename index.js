@@ -175,7 +175,7 @@ async function ssllabs() {
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
   try {
-    await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:240000})
+    await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:340000})
   } catch(err){
     await browser.close()
     console.log(red('[error] ' + name), red(err))
@@ -183,9 +183,15 @@ async function ssllabs() {
   }
   const links = await page.evaluate(() => [...document.querySelectorAll('#multiTable a')].map(link => link.href))
   const linksLength = links.length
-  for(let i = 0; i < linksLength; i++){
-    await page.goto(links[i])
-    await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
+  if(linksLength){
+    for(let i = 0; i < linksLength; i++){
+      await page.goto(links[i])
+      await page.waitFor(1000)
+      await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
+    }
+  } else {
+    await page.waitFor(1000)
+    await page.pdf({path: './ssllabs.pdf', format: 'A4', printBackground: true})
   }
   await browser.close()
   console.log(green('[done] ' + name))
