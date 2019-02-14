@@ -20,6 +20,7 @@ async function crtsh(){
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://crt.sh/?q=' + url)
+  await page.waitFor(1000)
   await page.pdf({path: './crtsh.pdf', format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
