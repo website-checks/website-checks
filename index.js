@@ -7,6 +7,8 @@ console.log(pkg.name + ' ' + pkg.version)
 
 const url = process.argv[2]
 
+const options = process.argv.slice(3) || []
+
 if(!process.argv[2]) {
   console.log(red('No website was provided.'))
   process.exit(1)
@@ -249,14 +251,14 @@ async function webhint(){
   console.log(green('[done] ' + name))
 }
 
-crtsh()
-cryptcheck()
-hstspreload()
-httpobservatory()
-lighthouse()
-psi()
-securityheaders()
-ssldecoder()
-ssllabs()
-webbkoll()
-webhint()
+if (!options.length || options.includes('--crtsh')) crtsh()
+if (!options.length || options.includes('--cryptcheck')) cryptcheck()
+if (!options.length || options.includes('--hstspreload')) hstspreload()
+if (!options.length || options.includes('--httpobservatory')) httpobservatory()
+if (!options.length || options.includes('--lighthouse')) lighthouse()
+if (!options.length || options.includes('--psi')) psi()
+if (!options.length || options.includes('--securityheaders')) securityheaders()
+if (!options.length || options.includes('--ssldecoder')) ssldecoder()
+if (!options.length || options.includes('--ssllabs')) ssllabs()
+if (!options.length || options.includes('--webbkoll')) webbkoll()
+if (!options.length || options.includes('--webhint')) webhint()
