@@ -1,13 +1,42 @@
+const fs = require('fs')
+const path = require('path')
 const puppeteer = require('puppeteer')
-const { red, green } = require('kleur');
+const { red, green, yellow } = require('kleur')
 const devices = require('puppeteer/DeviceDescriptors')
 const pkg = require('./package.json')
 
 console.log(pkg.name + ' ' + pkg.version)
 
 const url = process.argv[2]
+let output_path = '.';
 
-const options = process.argv.slice(3) || []
+let options = process.argv.slice(3) || []
+const options_len = options.length;
+
+let options_processed = {}
+let options_processed_last = ''
+
+for (let i = 0; i < options_len; i++) {
+    if(!options[i].startsWith('-')){
+        options_processed[options_processed_last] = options[i];
+    } else {
+        let argument_kv = options[i].split('=');
+        options_processed[argument_kv[0]] = argument_kv[1] ? argument_kv[1] : '';
+        options_processed_last = options[i];
+    }
+}
+
+options = options_processed
+const options_keys = Object.keys(options)
+
+if (typeof options['--output'] !== 'undefined' && typeof options['-o']) {
+  const dir = typeof options['--output'] !== 'undefined' ? path.resolve(options['--output']) : path.resolve(options['-o']);
+  if (fs.existsSync(dir) && fs.lstatSync(dir).isDirectory()) {
+    output_path = dir;
+  } else {
+    console.warn(yellow('Path ' + dir + ' can not be resolved, falling back to ' + path.resolve(output_path)))
+  }
+}
 
 if(!process.argv[2]) {
   console.log(red('No website was provided.'))
@@ -23,7 +52,7 @@ async function crtsh(){
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://crt.sh/?q=' + url)
   await page.waitFor(1000)
-  await page.pdf({path: './crtsh.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './crtsh.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -44,7 +73,7 @@ async function cryptcheck() {
   }
   await page.evaluate(() => document.querySelector('header').style.display = 'none')
   await page.emulateMedia('screen')
-  await page.pdf({path: './cryptcheck.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './cryptcheck.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -63,7 +92,7 @@ async function hstspreload() {
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.pdf({path: './hstspreload.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './hstspreload.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -83,7 +112,7 @@ async function httpobservatory() {
     return
   }
   await page.emulateMedia('screen')
-  await page.pdf({path: './httpobservatory.pdf', scale: 0.75, format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './httpobservatory.pdf'), scale: 0.75, format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -106,7 +135,7 @@ async function lighthouse(){
   }
   const link = await page.evaluate(() => document.querySelector('#reportLink').href)
   await page.goto(link)
-  await page.pdf({path: './lighthouse.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './lighthouse.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -126,9 +155,9 @@ async function psi(){
     return
   }
   await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(1)')
-  await page.pdf({path: './psi-mobile.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './psi-mobile.pdf'), format: 'A4', printBackground: true})
   await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
-  await page.pdf({path: './psi-desktop.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './psi-desktop.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -140,7 +169,7 @@ async function securityheaders(){
   const page = await browser.newPage()
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://securityheaders.com/?q=' + url + '&hide=on&followRedirects=on')
-  await page.pdf({path: './securityheaders.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './securityheaders.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -158,14 +187,14 @@ async function ssldecoder() {
     for(let i = 0; i < linksLength; i++){
       await page.goto(links[i])
       await page.emulateMedia('screen')
-      await page.pdf({path: './ssldecoder-'+i+'.pdf', format: 'A4', printBackground: true})
+      await page.pdf({path: path.resolve(output_path, './ssldecoder-'+i+'.pdf'), format: 'A4', printBackground: true})
     }
     await browser.close()
     console.log(green('[done] ' + name))
     return
   }
   await page.emulateMedia('screen')
-  await page.pdf({path: './ssldecoder.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './ssldecoder.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -190,11 +219,11 @@ async function ssllabs() {
     for(let i = 0; i < linksLength; i++){
       await page.goto(links[i])
       await page.waitFor(1000)
-      await page.pdf({path: './ssllabs-'+i+'.pdf', format: 'A4', printBackground: true})
+      await page.pdf({path: path.resolve(output_path, './ssllabs-'+i+'.pdf'), format: 'A4', printBackground: true})
     }
   } else {
     await page.waitFor(1000)
-    await page.pdf({path: './ssllabs.pdf', format: 'A4', printBackground: true})
+    await page.pdf({path: path.resolve(output_path, './ssllabs.pdf'), format: 'A4', printBackground: true})
   }
   await browser.close()
   console.log(green('[done] ' + name))
@@ -214,7 +243,7 @@ async function webbkoll() {
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.pdf({path: './webbkoll.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './webbkoll.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
@@ -246,19 +275,19 @@ async function webhint(){
   }
   await page.waitFor(1000)
   await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
-  await page.pdf({path: './webhint.pdf', format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './webhint.pdf'), format: 'A4', printBackground: true})
   await browser.close()
   console.log(green('[done] ' + name))
 }
 
-if (!options.length || options.includes('--crtsh')) crtsh()
-if (!options.length || options.includes('--cryptcheck')) cryptcheck()
-if (!options.length || options.includes('--hstspreload')) hstspreload()
-if (!options.length || options.includes('--httpobservatory')) httpobservatory()
-if (!options.length || options.includes('--lighthouse')) lighthouse()
-if (!options.length || options.includes('--psi')) psi()
-if (!options.length || options.includes('--securityheaders')) securityheaders()
-if (!options.length || options.includes('--ssldecoder')) ssldecoder()
-if (!options.length || options.includes('--ssllabs')) ssllabs()
-if (!options.length || options.includes('--webbkoll')) webbkoll()
-if (!options.length || options.includes('--webhint')) webhint()
+if (!options_keys.length || options_keys.includes('--crtsh')) crtsh()
+if (!options_keys.length || options_keys.includes('--cryptcheck')) cryptcheck()
+if (!options_keys.length || options_keys.includes('--hstspreload')) hstspreload()
+if (!options_keys.length || options_keys.includes('--httpobservatory')) httpobservatory()
+if (!options_keys.length || options_keys.includes('--lighthouse')) lighthouse()
+if (!options_keys.length || options_keys.includes('--psi')) psi()
+if (!options_keys.length || options_keys.includes('--securityheaders')) securityheaders()
+if (!options_keys.length || options_keys.includes('--ssldecoder')) ssldecoder()
+if (!options_keys.length || options_keys.includes('--ssllabs')) ssllabs()
+if (!options_keys.length || options_keys.includes('--webbkoll')) webbkoll()
+if (!options_keys.length || options_keys.includes('--webhint')) webhint()

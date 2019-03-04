@@ -26,6 +26,10 @@ yarn global add danielruf/website-checks
 
 `website-checks example.com`
 
+### Change output directory
+`website-checks example.com --output pdf` would save all PDF files to the local `pdf` directory.
+
+### CLI flags
 By default all checks will run. If you want to run only specific checks you can add CLI flags.
 
 Currently the following CLI flags will run the matching checks:
