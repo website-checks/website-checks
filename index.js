@@ -44,84 +44,111 @@ if(!process.argv[2]) {
   return
 }
 
+let browser;
+let open_pages = 0;
+
+async function setup(){
+  browser = await puppeteer.launch({headless: true, args: ['--lang=en']})
+}
+
+async function teardown(){
+  if(open_pages === 0) {
+    await browser.close()
+  }
+}
+
 async function crtsh(){
   const name = 'crt.sh'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://crt.sh/?q=' + url)
   await page.waitFor(1000)
   await page.pdf({path: path.resolve(output_path, './crtsh.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function cryptcheck() {
   const name = 'CryptCheck'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true, args: ['--lang=en']})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://tls.imirhil.fr/https/' + url)
   try {
     await page.waitForFunction('!document.querySelector("meta[http-equiv=\'refresh\']")',{timeout:30000})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
   await page.evaluate(() => document.querySelector('header').style.display = 'none')
   await page.emulateMedia('screen')
   await page.pdf({path: path.resolve(output_path, './cryptcheck.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function hstspreload() {
   const name = 'HSTS Preload List'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://hstspreload.org/?domain=' + url)
   try {
     await page.waitForSelector('#result',{timeout:30000,visible:true})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
   await page.pdf({path: path.resolve(output_path, './hstspreload.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function httpobservatory() {
   const name = 'HTTP Observatory'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://observatory.mozilla.org/analyze/' + url + '&third-party=false', {waitUntil: 'networkidle0'})
   try {
     await page.waitForFunction('!document.querySelector("#scan-progress-bar")',{timeout:240000})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
   await page.emulateMedia('screen')
   await page.pdf({path: path.resolve(output_path, './httpobservatory.pdf'), scale: 0.75, format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function lighthouse(){
   const name = 'Lighthouse'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://lighthouse-ci.appspot.com/try')
   await page.type('#url', url)
@@ -129,28 +156,34 @@ async function lighthouse(){
   try {
     await page.waitForSelector('body.done',{timeout:60000})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
   const link = await page.evaluate(() => document.querySelector('#reportLink').href)
   await page.goto(link)
   await page.pdf({path: path.resolve(output_path, './lighthouse.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function psi(){
   const name = 'PageSpeed Insights'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://developers.google.com/speed/pagespeed/insights/?url=' + url + '&tab=mobile')
   try {
     await page.waitForSelector('#page-speed-insights .pagespeed-results .result-tabs',{timeout:60000})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
@@ -158,27 +191,31 @@ async function psi(){
   await page.pdf({path: path.resolve(output_path, './psi-mobile.pdf'), format: 'A4', printBackground: true})
   await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
   await page.pdf({path: path.resolve(output_path, './psi-desktop.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function securityheaders(){
   const name = 'SecurityHeaders'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://securityheaders.com/?q=' + url + '&hide=on&followRedirects=on')
   await page.pdf({path: path.resolve(output_path, './securityheaders.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function ssldecoder() {
   const name = 'SSL Decoder'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://ssldecoder.org/?host=' + url,{timeout:240000})
   const links = await page.evaluate(() => [...document.querySelectorAll('#choose_endpoint a')].map(link => link.href))
@@ -189,27 +226,33 @@ async function ssldecoder() {
       await page.emulateMedia('screen')
       await page.pdf({path: path.resolve(output_path, './ssldecoder-'+i+'.pdf'), format: 'A4', printBackground: true})
     }
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(green('[done] ' + name))
     return
   }
   await page.emulateMedia('screen')
   await page.pdf({path: path.resolve(output_path, './ssldecoder.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function ssllabs() {
   const name = 'SSLLabs'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
   try {
     await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:340000})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
@@ -225,34 +268,40 @@ async function ssllabs() {
     await page.waitFor(1000)
     await page.pdf({path: path.resolve(output_path, './ssllabs.pdf'), format: 'A4', printBackground: true})
   }
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function webbkoll() {
   const name = 'webbkoll'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://webbkoll.dataskydd.net/en/check?url='+url+'&refresh=on')
   try {
     await page.waitForFunction('window.location.href.startsWith("https://webbkoll.dataskydd.net/en/results")',{timeout:240000})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
   await page.pdf({path: path.resolve(output_path, './webbkoll.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 async function webhint(){
   const name = 'webhint'
   console.log(green('[started] ' + name))
-  const browser = await puppeteer.launch({headless: true})
   const page = await browser.newPage()
+  open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
   await page.goto('https://webhint.io/scanner/')
   await page.type('#scanner-page-scan', url)
@@ -261,7 +310,9 @@ async function webhint(){
   try {
     await page.waitForSelector('.scan-overview__status',{timeout:30000,visible:true})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
@@ -269,27 +320,36 @@ async function webhint(){
   try {
     await page.waitForFunction('document.querySelector(".scan-overview__progress-bar.end-animation")',{timeout:240000})
   } catch(err){
-    await browser.close()
+    await page.close()
+    open_pages--
+    await teardown()
     console.log(red('[error] ' + name), red(err))
     return
   }
   await page.waitFor(1000)
   await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
   await page.pdf({path: path.resolve(output_path, './webhint.pdf'), format: 'A4', printBackground: true})
-  await browser.close()
+  await page.close()
+  open_pages--
+  await teardown()
   console.log(green('[done] ' + name))
 }
 
 const no_cli_flags = !options_keys.length || ( options_keys.length === 1 && options_keys.includes('--output'));
 
-if (no_cli_flags || options_keys.includes('--crtsh')) crtsh()
-if (no_cli_flags || options_keys.includes('--cryptcheck')) cryptcheck()
-if (no_cli_flags || options_keys.includes('--hstspreload')) hstspreload()
-if (no_cli_flags || options_keys.includes('--httpobservatory')) httpobservatory()
-if (no_cli_flags || options_keys.includes('--lighthouse')) lighthouse()
-if (no_cli_flags || options_keys.includes('--psi')) psi()
-if (no_cli_flags || options_keys.includes('--securityheaders')) securityheaders()
-if (no_cli_flags || options_keys.includes('--ssldecoder')) ssldecoder()
-if (no_cli_flags || options_keys.includes('--ssllabs')) ssllabs()
-if (no_cli_flags || options_keys.includes('--webbkoll')) webbkoll()
-if (no_cli_flags || options_keys.includes('--webhint')) webhint()
+async function runChecks(){
+  await setup();
+  if (no_cli_flags || options_keys.includes('--crtsh')) crtsh()
+  if (no_cli_flags || options_keys.includes('--cryptcheck')) cryptcheck()
+  if (no_cli_flags || options_keys.includes('--hstspreload')) hstspreload()
+  if (no_cli_flags || options_keys.includes('--httpobservatory')) httpobservatory()
+  if (no_cli_flags || options_keys.includes('--lighthouse')) lighthouse()
+  if (no_cli_flags || options_keys.includes('--psi')) psi()
+  if (no_cli_flags || options_keys.includes('--securityheaders')) securityheaders()
+  if (no_cli_flags || options_keys.includes('--ssldecoder')) ssldecoder()
+  if (no_cli_flags || options_keys.includes('--ssllabs')) ssllabs()
+  if (no_cli_flags || options_keys.includes('--webbkoll')) webbkoll()
+  if (no_cli_flags || options_keys.includes('--webhint')) webhint()
+}
+
+runChecks()
