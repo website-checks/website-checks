@@ -282,14 +282,80 @@ async function webhint(){
 
 const no_cli_flags = !options_keys.length || ( options_keys.length === 1 && options_keys.includes('--output'));
 
-if (no_cli_flags || options_keys.includes('--crtsh')) crtsh()
-if (no_cli_flags || options_keys.includes('--cryptcheck')) cryptcheck()
-if (no_cli_flags || options_keys.includes('--hstspreload')) hstspreload()
-if (no_cli_flags || options_keys.includes('--httpobservatory')) httpobservatory()
-if (no_cli_flags || options_keys.includes('--lighthouse')) lighthouse()
-if (no_cli_flags || options_keys.includes('--psi')) psi()
-if (no_cli_flags || options_keys.includes('--securityheaders')) securityheaders()
-if (no_cli_flags || options_keys.includes('--ssldecoder')) ssldecoder()
-if (no_cli_flags || options_keys.includes('--ssllabs')) ssllabs()
-if (no_cli_flags || options_keys.includes('--webbkoll')) webbkoll()
-if (no_cli_flags || options_keys.includes('--webhint')) webhint()
+if (no_cli_flags || options_keys.includes('--crtsh')) {
+  try {
+    crtsh()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--cryptcheck')) {
+  try {
+    cryptcheck()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--hstspreload')) {
+  try {
+    hstspreload()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--httpobservatory')) {
+  try {
+    httpobservatory()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--lighthouse')) {
+  try {
+    lighthouse()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--psi')) {
+  try {
+    psi()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--securityheaders')) {
+  try {
+    securityheaders()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--ssldecoder')) {
+  try {
+    ssldecoder()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--ssllabs')) {
+  try {
+    ssllabs()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--webbkoll')) {
+  try {
+    webbkoll()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
+if (no_cli_flags || options_keys.includes('--webhint')) {
+  try {
+    webhint()
+  } catch(e) {
+    console.error(red(e));
+  }
+}
