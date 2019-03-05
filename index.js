@@ -280,14 +280,16 @@ async function webhint(){
   console.log(green('[done] ' + name))
 }
 
-if (!options_keys.length || options_keys.includes('--crtsh')) crtsh()
-if (!options_keys.length || options_keys.includes('--cryptcheck')) cryptcheck()
-if (!options_keys.length || options_keys.includes('--hstspreload')) hstspreload()
-if (!options_keys.length || options_keys.includes('--httpobservatory')) httpobservatory()
-if (!options_keys.length || options_keys.includes('--lighthouse')) lighthouse()
-if (!options_keys.length || options_keys.includes('--psi')) psi()
-if (!options_keys.length || options_keys.includes('--securityheaders')) securityheaders()
-if (!options_keys.length || options_keys.includes('--ssldecoder')) ssldecoder()
-if (!options_keys.length || options_keys.includes('--ssllabs')) ssllabs()
-if (!options_keys.length || options_keys.includes('--webbkoll')) webbkoll()
-if (!options_keys.length || options_keys.includes('--webhint')) webhint()
+const no_cli_flags = !options_keys.length || ( options_keys.length === 1 && options_keys.includes('--output'));
+
+if (no_cli_flags || options_keys.includes('--crtsh')) crtsh()
+if (no_cli_flags || options_keys.includes('--cryptcheck')) cryptcheck()
+if (no_cli_flags || options_keys.includes('--hstspreload')) hstspreload()
+if (no_cli_flags || options_keys.includes('--httpobservatory')) httpobservatory()
+if (no_cli_flags || options_keys.includes('--lighthouse')) lighthouse()
+if (no_cli_flags || options_keys.includes('--psi')) psi()
+if (no_cli_flags || options_keys.includes('--securityheaders')) securityheaders()
+if (no_cli_flags || options_keys.includes('--ssldecoder')) ssldecoder()
+if (no_cli_flags || options_keys.includes('--ssllabs')) ssllabs()
+if (no_cli_flags || options_keys.includes('--webbkoll')) webbkoll()
+if (no_cli_flags || options_keys.includes('--webhint')) webhint()
