@@ -185,7 +185,7 @@ async function ssldecoder() {
   const linksLength = links.length
   if(linksLength){
     for(let i = 0; i < linksLength; i++){
-      await page.goto(links[i])
+      await page.goto(links[i], {timeout: 60000})
       await page.emulateMedia('screen')
       await page.pdf({path: path.resolve(output_path, './ssldecoder-'+i+'.pdf'), format: 'A4', printBackground: true})
     }
