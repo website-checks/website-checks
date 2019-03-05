@@ -35,11 +35,11 @@
   },
   "homepage": "https://github.com/DanielRuf/website-checks#readme",
   "dependencies": {
-    "kleur": "^3.0.1",
-    "puppeteer": "^1.4.0"
+    "kleur": "3.0.2",
+    "puppeteer": "1.13.0"
   },
   "devDependencies": {
-    "jest": "^24.1.0",
-    "jest-puppeteer": "^4.0.0"
+    "jest": "24.1.0",
+    "jest-puppeteer": "4.0.0"
   }
 }
