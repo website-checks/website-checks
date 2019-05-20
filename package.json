@@ -4,7 +4,18 @@
   "main": "index.js",
   "description": "checks websites with multiple services",
   "scripts": {
-    "test": "jest"
+    "test": "npm-run-all test:*",
+    "test:crtsh": "node index.js example.com --crtsh",
+    "test:cryptcheck": "node index.js example.com --cryptcheck",
+    "test:hstspreload": "node index.js example.com --hstspreload",
+    "test:httpobservatory": "node index.js example.com --httpobservatory",
+    "test:lighthouse": "node index.js example.com --lighthouse",
+    "test:psi": "node index.js example.com --psi",
+    "test:securityheaders": "node index.js example.com --securityheaders",
+    "test:ssldecoder": "node index.js example.com --ssldecoder",
+    "test:ssllabs": "node index.js example.com --ssllabs",
+    "test:webbkoll": "node index.js example.com --webbkoll",
+    "test:webhint": "node index.js example.com --webhint"
   },
   "bin": {
     "website-checks": "./bin/website-checks.js"
@@ -39,7 +50,6 @@
     "puppeteer": "1.13.0"
   },
   "devDependencies": {
-    "jest": "24.1.0",
-    "jest-puppeteer": "4.0.0"
+    "npm-run-all": "^4.1.5"
   }
 }
