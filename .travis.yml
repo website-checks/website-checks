@@ -2,8 +2,9 @@ language: node_js
 node_js:
   - "10"
   - "node"
-script:
+install:
   - yarn
+script:
   - yarn test
 cache:
   yarn: true
