@@ -13,6 +13,7 @@
     "test:psi": "node index.js example.com --psi",
     "test:securityheaders": "node index.js example.com --securityheaders",
     "test:ssldecoder": "node index.js example.com --ssldecoder",
+    "test:ssldecoder-fast": "node index.js example.com --ssldecoder-fast",
     "test:ssllabs": "node index.js example.com --ssllabs",
     "test:webbkoll": "node index.js example.com --webbkoll",
     "test:webhint": "node index.js example.com --webhint"
