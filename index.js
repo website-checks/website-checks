@@ -212,20 +212,19 @@ async function securityheaders(){
 }
 
 async function ssldecoder(fastcheck) {
-  const name = 'SSL Decoder'
-  const fast = fastcheck ? '1' : '0'
+  const name = 'SSL Decoder' + (fastcheck ? ' (fast)' : '')
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
   await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://ssldecoder.org/?host=' + url + '&fastcheck=' + fast,{timeout:240000})
+  await page.goto('https://ssldecoder.org/?host=' + url + '&fastcheck=' + (fastcheck ? '1' : '0'),{timeout:240000})
   const links = await page.evaluate(() => [...document.querySelectorAll('#choose_endpoint a')].map(link => link.href))
   const linksLength = links.length
   if(linksLength){
     for(let i = 0; i < linksLength; i++){
       await page.goto(links[i], {timeout: 120000})
       await page.emulateMedia('screen')
-      await page.pdf({path: path.resolve(output_path, './ssldecoder-'+i+'.pdf'), format: 'A4', printBackground: true})
+      await page.pdf({path: path.resolve(output_path, './ssldecoder-' + (fastcheck ? 'fast-' : '') + i + '.pdf'), format: 'A4', printBackground: true})
     }
     await page.close()
     open_pages--
@@ -234,7 +233,7 @@ async function ssldecoder(fastcheck) {
     return
   }
   await page.emulateMedia('screen')
-  await page.pdf({path: path.resolve(output_path, './ssldecoder.pdf'), format: 'A4', printBackground: true})
+  await page.pdf({path: path.resolve(output_path, './ssldecoder'  + (fastcheck ? 'fast-' : '') + '.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -347,7 +346,7 @@ async function runChecks(){
   if (no_cli_flags || options_keys.includes('--lighthouse')) lighthouse()
   if (no_cli_flags || options_keys.includes('--psi')) psi()
   if (no_cli_flags || options_keys.includes('--securityheaders')) securityheaders()
-  if (no_cli_flags || options_keys.includes('--ssldecoder')) ssldecoder()
+  if (options_keys.includes('--ssldecoder')) ssldecoder()
   if (no_cli_flags || options_keys.includes('--ssldecoder-fast')) ssldecoder(true)
   if (no_cli_flags || options_keys.includes('--ssllabs')) ssllabs()
   if (no_cli_flags || options_keys.includes('--webbkoll')) webbkoll()
