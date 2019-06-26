@@ -49,3 +49,15 @@ Currently the following CLI flags will run the matching checks:
 ```
 
 For example `website-checks example.com --lighthouse --securityheaders` will run the Lighthouse and Security Headers checks.
+
+## Known issues
+
+### missing Chrome / Chromium dependency for Windows binary (.exe)
+
+On Windows it may happen that the bundled binary throws the following error:
+
+> UnhandledPromiseRejectionWarning: Error: Chromium revision is not downloaded. Run "npm install" or "yarn install" at Launcher.launch
+
+This is a known issue with all solutions like `pkg` and `nexe` and expected as Chromium is not bundled with the binary which would make it much bigger.
+
+In most cases it should be solved by globally installing `puppeteer` or by having Chrome or Chromium installed and in `PATH`.
