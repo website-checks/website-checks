@@ -14,3 +14,32 @@ cache:
   yarn: true
   directories:
     - node_modules
+default-script: &default-script "yarn test:${TRAVIS_JOB_NAME}"
+matrix:
+  allow_failures:
+    - node_js: "10"
+  include:
+    - name: "crtsh"
+      script: *default-script
+    - name: "cryptcheck"
+      script: *default-script
+    - name: "hstspreload"
+      script: *default-script
+    - name: "httpobservatory"
+      script: *default-script
+    - name: "lighthouse"
+      script: *default-script
+    - name: "psi"
+      script: *default-script
+    - name: "securityheaders"
+      script: *default-script
+    - name: "ssldecoder"
+      script: *default-script
+    - name: "ssldecoder-fast"
+      script: *default-script
+    - name: "ssllabs"
+      script: *default-script
+    - name: "webbkoll"
+      script: *default-script
+    - name: "webhint"
+      script: *default-script
