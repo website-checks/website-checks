@@ -81,6 +81,8 @@ async function cryptcheck() {
   await page.goto('https://tls.imirhil.fr/https/' + url)
   try {
     await page.waitForFunction('!document.querySelector("meta[http-equiv=\'refresh\']")',{timeout:30000})
+    await page.waitForSelector('header')
+    await page.evaluate(() => document.querySelector('header').style.display = 'none')
   } catch(err){
     await page.close()
     open_pages--
@@ -88,7 +90,6 @@ async function cryptcheck() {
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.evaluate(() => document.querySelector('header').style.display = 'none')
   await page.emulateMedia('screen')
   await page.pdf({path: path.resolve(output_path, './cryptcheck.pdf'), format: 'A4', printBackground: true})
   await page.close()
