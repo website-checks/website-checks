@@ -62,10 +62,18 @@ async function crtsh(){
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://crt.sh/?q=' + url)
-  await page.waitFor(1000)
-  await page.pdf({path: path.resolve(output_path, './crtsh.pdf'), format: 'A4', printBackground: true})
+  try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://crt.sh/?q=' + url)
+    await page.waitFor(1000)
+    await page.pdf({path: path.resolve(output_path, './crtsh.pdf'), format: 'A4', printBackground: true})
+  } catch(err){
+    await page.close()
+    open_pages--
+    await teardown()
+    console.log(red('[error] ' + name), red(err))
+    return
+  }
   await page.close()
   open_pages--
   await teardown()
@@ -77,12 +85,14 @@ async function cryptcheck() {
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://tls.imirhil.fr/https/' + url)
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://tls.imirhil.fr/https/' + url)
     await page.waitForFunction('!document.querySelector("meta[http-equiv=\'refresh\']")',{timeout:30000})
     await page.waitForSelector('header')
     await page.evaluate(() => document.querySelector('header').style.display = 'none')
+    await page.emulateMedia('screen')
+    await page.pdf({path: path.resolve(output_path, './cryptcheck.pdf'), format: 'A4', printBackground: true})
   } catch(err){
     await page.close()
     open_pages--
@@ -90,8 +100,6 @@ async function cryptcheck() {
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.emulateMedia('screen')
-  await page.pdf({path: path.resolve(output_path, './cryptcheck.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -103,10 +111,11 @@ async function hstspreload() {
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://hstspreload.org/?domain=' + url)
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://hstspreload.org/?domain=' + url)
     await page.waitForSelector('#result',{timeout:30000,visible:true})
+    await page.pdf({path: path.resolve(output_path, './hstspreload.pdf'), format: 'A4', printBackground: true})
   } catch(err){
     await page.close()
     open_pages--
@@ -114,7 +123,6 @@ async function hstspreload() {
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.pdf({path: path.resolve(output_path, './hstspreload.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -126,10 +134,12 @@ async function httpobservatory() {
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://observatory.mozilla.org/analyze/' + url + '&third-party=false', {waitUntil: 'networkidle0'})
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://observatory.mozilla.org/analyze/' + url + '&third-party=false', {waitUntil: 'networkidle0'})
     await page.waitForFunction('!document.querySelector("#scan-progress-bar")',{timeout:240000})
+    await page.emulateMedia('screen')
+    await page.pdf({path: path.resolve(output_path, './httpobservatory.pdf'), scale: 0.75, format: 'A4', printBackground: true})
   } catch(err){
     await page.close()
     open_pages--
@@ -137,8 +147,6 @@ async function httpobservatory() {
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.emulateMedia('screen')
-  await page.pdf({path: path.resolve(output_path, './httpobservatory.pdf'), scale: 0.75, format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -150,12 +158,15 @@ async function lighthouse(){
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://lighthouse-ci.appspot.com/try')
-  await page.type('#url', url)
-  await page.click('.url-section .search-arrow')
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://lighthouse-ci.appspot.com/try')
+    await page.type('#url', url)
+    await page.click('.url-section .search-arrow')
     await page.waitForSelector('body.done',{timeout:60000})
+    const link = await page.evaluate(() => document.querySelector('#reportLink').href)
+    await page.goto(link)
+    await page.pdf({path: path.resolve(output_path, './lighthouse.pdf'), format: 'A4', printBackground: true})
   } catch(err){
     await page.close()
     open_pages--
@@ -163,9 +174,6 @@ async function lighthouse(){
     console.log(red('[error] ' + name), red(err))
     return
   }
-  const link = await page.evaluate(() => document.querySelector('#reportLink').href)
-  await page.goto(link)
-  await page.pdf({path: path.resolve(output_path, './lighthouse.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -177,10 +185,14 @@ async function psi(){
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://developers.google.com/speed/pagespeed/insights/?url=' + url + '&tab=mobile')
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://developers.google.com/speed/pagespeed/insights/?url=' + url + '&tab=mobile')
     await page.waitForSelector('#page-speed-insights .pagespeed-results .result-tabs',{timeout:60000})
+    await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(1)')
+    await page.pdf({path: path.resolve(output_path, './psi-mobile.pdf'), format: 'A4', printBackground: true})
+    await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
+    await page.pdf({path: path.resolve(output_path, './psi-desktop.pdf'), format: 'A4', printBackground: true})
   } catch(err){
     await page.close()
     open_pages--
@@ -188,10 +200,6 @@ async function psi(){
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(1)')
-  await page.pdf({path: path.resolve(output_path, './psi-mobile.pdf'), format: 'A4', printBackground: true})
-  await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
-  await page.pdf({path: path.resolve(output_path, './psi-desktop.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -203,9 +211,17 @@ async function securityheaders(){
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://securityheaders.com/?q=' + url + '&hide=on&followRedirects=on')
-  await page.pdf({path: path.resolve(output_path, './securityheaders.pdf'), format: 'A4', printBackground: true})
+  try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://securityheaders.com/?q=' + url + '&hide=on&followRedirects=on')
+    await page.pdf({path: path.resolve(output_path, './securityheaders.pdf'), format: 'A4', printBackground: true})
+  } catch(err){
+    await page.close()
+    open_pages--
+    await teardown()
+    console.log(red('[error] ' + name), red(err))
+    return
+  }
   await page.close()
   open_pages--
   await teardown()
@@ -217,24 +233,32 @@ async function ssldecoder(fastcheck) {
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://ssldecoder.org/?host=' + url + '&fastcheck=' + (fastcheck ? '1' : '0'),{timeout:240000})
-  const links = await page.evaluate(() => [...document.querySelectorAll('#choose_endpoint a')].map(link => link.href))
-  const linksLength = links.length
-  if(linksLength){
-    for(let i = 0; i < linksLength; i++){
-      await page.goto(links[i], {timeout: 120000})
-      await page.emulateMedia('screen')
-      await page.pdf({path: path.resolve(output_path, './ssldecoder-' + (fastcheck ? 'fast-' : '') + i + '.pdf'), format: 'A4', printBackground: true})
+  try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://ssldecoder.org/?host=' + url + '&fastcheck=' + (fastcheck ? '1' : '0'),{timeout:240000})
+    const links = await page.evaluate(() => [...document.querySelectorAll('#choose_endpoint a')].map(link => link.href))
+    const linksLength = links.length
+    if(linksLength){
+      for(let i = 0; i < linksLength; i++){
+        await page.goto(links[i], {timeout: 120000})
+        await page.emulateMedia('screen')
+        await page.pdf({path: path.resolve(output_path, './ssldecoder-' + (fastcheck ? 'fast-' : '') + i + '.pdf'), format: 'A4', printBackground: true})
+      }
+      await page.close()
+      open_pages--
+      await teardown()
+      console.log(green('[done] ' + name))
+      return
     }
+    await page.emulateMedia('screen')
+    await page.pdf({path: path.resolve(output_path, './ssldecoder'  + (fastcheck ? 'fast-' : '') + '.pdf'), format: 'A4', printBackground: true})
+  } catch(err){
     await page.close()
     open_pages--
     await teardown()
-    console.log(green('[done] ' + name))
+    console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.emulateMedia('screen')
-  await page.pdf({path: path.resolve(output_path, './ssldecoder'  + (fastcheck ? 'fast-' : '') + '.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -246,28 +270,28 @@ async function ssllabs() {
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://www.ssllabs.com/ssltest/analyze.html?d='+url+'&hideResults=on&ignoreMismatch=on&clearCache=on')
     await page.waitForFunction('!document.querySelector("#refreshUrl")',{timeout:340000})
+    const links = await page.evaluate(() => [...document.querySelectorAll('#multiTable a')].map(link => link.href))
+    const linksLength = links.length
+    if(linksLength){
+      for(let i = 0; i < linksLength; i++){
+        await page.goto(links[i])
+        await page.waitFor(1000)
+        await page.pdf({path: path.resolve(output_path, './ssllabs-'+i+'.pdf'), format: 'A4', printBackground: true})
+      }
+    } else {
+      await page.waitFor(1000)
+      await page.pdf({path: path.resolve(output_path, './ssllabs.pdf'), format: 'A4', printBackground: true})
+    }
   } catch(err){
     await page.close()
     open_pages--
     await teardown()
     console.log(red('[error] ' + name), red(err))
     return
-  }
-  const links = await page.evaluate(() => [...document.querySelectorAll('#multiTable a')].map(link => link.href))
-  const linksLength = links.length
-  if(linksLength){
-    for(let i = 0; i < linksLength; i++){
-      await page.goto(links[i])
-      await page.waitFor(1000)
-      await page.pdf({path: path.resolve(output_path, './ssllabs-'+i+'.pdf'), format: 'A4', printBackground: true})
-    }
-  } else {
-    await page.waitFor(1000)
-    await page.pdf({path: path.resolve(output_path, './ssllabs.pdf'), format: 'A4', printBackground: true})
   }
   await page.close()
   open_pages--
@@ -280,10 +304,11 @@ async function webbkoll() {
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://webbkoll.dataskydd.net/en/check?url='+url+'&refresh=on')
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://webbkoll.dataskydd.net/en/check?url='+url+'&refresh=on')
     await page.waitForFunction('window.location.href.startsWith("https://webbkoll.dataskydd.net/en/results")',{timeout:240000})
+    await page.pdf({path: path.resolve(output_path, './webbkoll.pdf'), format: 'A4', printBackground: true})
   } catch(err){
     await page.close()
     open_pages--
@@ -291,7 +316,6 @@ async function webbkoll() {
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.pdf({path: path.resolve(output_path, './webbkoll.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
@@ -303,23 +327,18 @@ async function webhint(){
   console.log(green('[started] ' + name))
   const page = await browser.newPage()
   open_pages++
-  await page._client.send('Emulation.clearDeviceMetricsOverride')
-  await page.goto('https://webhint.io/scanner/')
-  await page.type('#scanner-page-scan', url)
-  await page.click('#scanner-page-scan + button[type="submit"]')
-  await page.waitFor(1000)
   try {
+    await page._client.send('Emulation.clearDeviceMetricsOverride')
+    await page.goto('https://webhint.io/scanner/')
+    await page.type('#scanner-page-scan', url)
+    await page.click('#scanner-page-scan + button[type="submit"]')
+    await page.waitFor(1000)
     await page.waitForSelector('.scan-overview__status',{timeout:30000,visible:true})
-  } catch(err){
-    await page.close()
-    open_pages--
-    await teardown()
-    console.log(red('[error] ' + name), red(err))
-    return
-  }
-  await page.waitFor(1000)
-  try {
+    await page.waitFor(1000)
     await page.waitForFunction('document.querySelector(".scan-overview__progress-bar.end-animation")',{timeout:240000})
+    await page.waitFor(1000)
+    await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
+    await page.pdf({path: path.resolve(output_path, './webhint.pdf'), format: 'A4', printBackground: true})
   } catch(err){
     await page.close()
     open_pages--
@@ -327,9 +346,6 @@ async function webhint(){
     console.log(red('[error] ' + name), red(err))
     return
   }
-  await page.waitFor(1000)
-  await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
-  await page.pdf({path: path.resolve(output_path, './webhint.pdf'), format: 'A4', printBackground: true})
   await page.close()
   open_pages--
   await teardown()
