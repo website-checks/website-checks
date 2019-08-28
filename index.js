@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const puppeteer = require('puppeteer')
 const { red, green, yellow } = require('kleur')
-const devices = require('puppeteer/DeviceDescriptors')
 const pkg = require('./package.json')
 
 console.log(pkg.name + ' ' + pkg.version)
