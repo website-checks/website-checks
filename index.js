@@ -18,19 +18,18 @@ let output_path = '.'
 let browser
 let open_pages = 0
 
+const successHandler = async (page, name) => {
+  await page.close()
+  open_pages--
+  await teardown()
+  console.log(green('[done] ' + name))
+}
 const errorHandler = async (err, page, name) => {
   await page.close()
   open_pages--
   await teardown()
   console.log(red('[error] ' + name), red(err))
   return
-}
-
-const successHandler = async (page, name) => {
-  await page.close()
-  open_pages--
-  await teardown()
-  console.log(green('[done] ' + name))
 }
 
 console.log(pkg.name + ' ' + pkg.version)
