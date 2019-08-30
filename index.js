@@ -6,6 +6,12 @@ const pkg = require('./package.json')
 
 console.log(pkg.name + ' ' + pkg.version)
 
+if(!process.argv[2]) {
+  console.log(red('No website was provided.'))
+  process.exit(1)
+  return
+}
+
 const url = process.argv[2]
 let output_path = '.';
 
