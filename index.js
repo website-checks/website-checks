@@ -43,11 +43,19 @@ if (typeof options['--output'] !== 'undefined' && typeof options['-o']) {
   }
 }
 
-if(!process.argv[2]) {
-  console.log(red('No website was provided.'))
-  process.exit(1)
-  return
+output_path = path.join(output_path, url)
+if (!fs.existsSync(output_path)) {
+  fs.mkdirSync(output_path)
 }
+
+let datetimeString = new Date().toISOString()
+datetimeString = datetimeString.replace(/(:|T|\.)/g, '-').replace('Z','')
+
+output_path = path.join(output_path, datetimeString)
+if (!fs.existsSync(output_path)) {
+  fs.mkdirSync(output_path)
+}
+
 
 let browser;
 let open_pages = 0;
