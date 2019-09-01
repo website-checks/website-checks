@@ -47,6 +47,6 @@ matrix:
       node_js: "10"
       script:
         - yarn global add nexe
-        - "nexe index.js -o website-checks -t linux"
-        - "nexe index.js -o website-checks -t mac"
-        - "nexe index.js -o website-checks -t windows"
+        - "nexe index.js -o website-checks -t linux --build"
+        - "nexe index.js -o website-checks -t mac --build"
+        - "nexe index.js -o website-checks -t windows --build"
