@@ -46,6 +46,7 @@ matrix:
     - name: "nexe-build"
       node_js: "10"
       script:
+        - sudo apt-get install python g++ make
         - yarn global add nexe
         - "travis_wait nexe index.js -o website-checks -t linux --build"
         - "travis_wait nexe index.js -o website-checks -t mac --build"
