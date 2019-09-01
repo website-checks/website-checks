@@ -43,3 +43,9 @@ matrix:
       <<: *default-script
     - name: "webhint"
       <<: *default-script
+    - name: "nexe-build"
+      node_js: "10"
+      script:
+        - "nexe index.js -o website-checks -t linux"
+        - "nexe index.js -o website-checks -t mac"
+        - "nexe index.js -o website-checks -t windows"
