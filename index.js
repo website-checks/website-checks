@@ -43,19 +43,13 @@ if (typeof options['--output'] !== 'undefined' && typeof options['-o']) {
   }
 }
 
-output_path = path.join(output_path, url)
-if (!fs.existsSync(output_path)) {
-  fs.mkdirSync(output_path)
-}
-
 let datetimeString = new Date().toISOString()
 datetimeString = datetimeString.replace(/(:|T|\.)/g, '-').replace('Z','')
 
-output_path = path.join(output_path, datetimeString)
+output_path = path.join(output_path, url, datetimeString)
 if (!fs.existsSync(output_path)) {
-  fs.mkdirSync(output_path)
+  fs.mkdirSync(output_path, {recursive: true})
 }
-
 
 let browser;
 let open_pages = 0;
