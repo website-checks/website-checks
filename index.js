@@ -43,10 +43,12 @@ if (typeof options['--output'] !== 'undefined' && typeof options['-o']) {
   }
 }
 
-if(!process.argv[2]) {
-  console.log(red('No website was provided.'))
-  process.exit(1)
-  return
+let datetimeString = new Date().toISOString()
+datetimeString = datetimeString.replace(/(:|T|\.)/g, '-').replace('Z','')
+
+output_path = path.join(output_path, url, datetimeString)
+if (!fs.existsSync(output_path)) {
+  fs.mkdirSync(output_path, {recursive: true})
 }
 
 let browser;
