@@ -5,14 +5,14 @@ const { red, green, yellow } = require('kleur')
 
 const pkg = require('./package.json')
 const { options, options_keys } = require('./utils/process-argv')
+const url = process.argv[2]
 
-if(!process.argv[2]) {
+if(!url) {
   console.log(red('No website was provided.'))
   process.exit(1)
   return
 }
 
-const url = process.argv[2]
 const no_cli_flags = !options_keys.length || ( options_keys.length === 1 && options_keys.includes('--output'))
 let output_path = '.'
 let browser
