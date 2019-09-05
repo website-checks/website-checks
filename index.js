@@ -1,88 +1,32 @@
 const fs = require('fs')
 const path = require('path')
 const puppeteer = require('puppeteer')
-const { red, green, yellow } = require('kleur')
 
 const pkg = require('./package.json')
 const { options, options_keys } = require('./utils/process-argv')
+const urlCheck = require('./modules/url-check')
+const createFolders = require('./modules/create-folders')
+const setOutput = require('./modules/set-output')
+const createDatetimeString = require('./modules/create-datetime-string')
+const setup = require('./modules/setup')
+const checkFunction = require('./modules/check-function')
+const crtsh = require('./modules/checks/crtsh')
+
 const url = process.argv[2]
 
 console.log(pkg.name + ' ' + pkg.version)
 
-if (!url) {
-  console.log(red('No website was provided.'))
-  process.exit(1)
-}
+urlCheck(url)
 
 const no_cli_flags = !options_keys.length || (options_keys.length === 1 && options_keys.includes('--output'))
+const datetimeString = createDatetimeString()
 let output_path = '.'
 let browser
 let open_pages = 0
 
-const successHandler = async (page, name) => {
-  await page.close()
-  open_pages--
-  await teardown()
-  console.log(green('[done] ' + name))
-}
-
-const errorHandler = async (err, page, name) => {
-  await page.close()
-  open_pages--
-  await teardown()
-  console.log(red('[error] ' + name), red(err))
-  return
-}
-
-if (typeof options['--output'] !== 'undefined') {
-  const dir = path.resolve(options['--output'])
-  if (fs.existsSync(dir) && fs.lstatSync(dir).isDirectory()) {
-    output_path = dir
-  } else {
-    console.warn(yellow('Path ' + dir + ' can not be resolved, falling back to ' + path.resolve(output_path)))
-  }
-}
-
-let datetimeString = new Date().toISOString()
-datetimeString = datetimeString.replace(/(:|T|\.)/g, '-').replace('Z', '')
-
+output_path = setOutput(options, output_path)
 output_path = path.join(output_path, url, datetimeString)
-if (!fs.existsSync(output_path)) {
-  fs.mkdirSync(output_path, { recursive: true })
-}
-
-async function setup() {
-  browser = await puppeteer.launch({ headless: true, args: ['--lang=en'] })
-}
-
-async function teardown() {
-  if (open_pages === 0) {
-    await browser.close()
-  }
-}
-
-async function checkFunction(name, tryBlock) {
-  console.log(green('[started] ' + name))
-  const page = await browser.newPage()
-  open_pages++
-  try {
-    await tryBlock(page)
-    await successHandler(page, name)
-  } catch (err) {
-    await errorHandler(err, page, name)
-  }
-}
-
-async function crtsh() {
-  const name = 'crt.sh'
-  async function tryBlock(page) {
-    await page._client.send('Emulation.clearDeviceMetricsOverride')
-    await page.goto('https://crt.sh/?q=' + url)
-    await page.waitFor(1000)
-    await page.pdf({ path: path.resolve(output_path, './crtsh.pdf'), format: 'A4', printBackground: true })
-  }
-  await checkFunction(name, tryBlock)
-}
+createFolders(output_path)
 
 async function cryptcheck() {
   const name = 'CryptCheck'
@@ -95,7 +39,7 @@ async function cryptcheck() {
     await page.emulateMedia('screen')
     await page.pdf({ path: path.resolve(output_path, './cryptcheck.pdf'), format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function hstspreload() {
@@ -106,7 +50,7 @@ async function hstspreload() {
     await page.waitForSelector('#result', { timeout: 30000, visible: true })
     await page.pdf({ path: path.resolve(output_path, './hstspreload.pdf'), format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function httpobservatory() {
@@ -118,7 +62,7 @@ async function httpobservatory() {
     await page.emulateMedia('screen')
     await page.pdf({ path: path.resolve(output_path, './httpobservatory.pdf'), scale: 0.75, format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function lighthouse() {
@@ -133,7 +77,7 @@ async function lighthouse() {
     await page.goto(link)
     await page.pdf({ path: path.resolve(output_path, './lighthouse.pdf'), format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function psi() {
@@ -147,7 +91,7 @@ async function psi() {
     await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(2)')
     await page.pdf({ path: path.resolve(output_path, './psi-desktop.pdf'), format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function securityheaders() {
@@ -157,7 +101,7 @@ async function securityheaders() {
     await page.goto('https://securityheaders.com/?q=' + url + '&hide=on&followRedirects=on')
     await page.pdf({ path: path.resolve(output_path, './securityheaders.pdf'), format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function ssldecoder(fastcheck) {
@@ -178,7 +122,7 @@ async function ssldecoder(fastcheck) {
       await page.pdf({ path: path.resolve(output_path, './ssldecoder' + (fastcheck ? 'fast-' : '') + '.pdf'), format: 'A4', printBackground: true })
     }
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function ssllabs() {
@@ -200,7 +144,7 @@ async function ssllabs() {
       await page.pdf({ path: path.resolve(output_path, './ssllabs.pdf'), format: 'A4', printBackground: true })
     }
   }
-  await checkFunction(name, tryBlock)
+  await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function webbkoll() {
@@ -211,7 +155,7 @@ async function webbkoll() {
     await page.waitForFunction('window.location.href.startsWith("https://webbkoll.dataskydd.net/en/results")', { timeout: 240000 })
     await page.pdf({ path: path.resolve(output_path, './webbkoll.pdf'), format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function webhint() {
@@ -229,12 +173,12 @@ async function webhint() {
     await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
     await page.pdf({ path: path.resolve(output_path, './webhint.pdf'), format: 'A4', printBackground: true })
   }
-  await checkFunction(name, tryBlock)
+  await await checkFunction(name, tryBlock, browser, open_pages)
 }
 
 async function runChecks() {
-  await setup()
-  if (no_cli_flags || options_keys.includes('--crtsh')) crtsh()
+  browser = await setup(puppeteer)
+  crtsh(browser, open_pages, url, output_path, no_cli_flags, options_keys)
   if (no_cli_flags || options_keys.includes('--cryptcheck')) cryptcheck()
   if (no_cli_flags || options_keys.includes('--hstspreload')) hstspreload()
   if (no_cli_flags || options_keys.includes('--httpobservatory')) httpobservatory()
