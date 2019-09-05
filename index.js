@@ -34,8 +34,8 @@ const errorHandler = async (err, page, name) => {
   return
 }
 
-if (typeof options['--output'] !== 'undefined' && typeof options['-o']) {
-  const dir = typeof options['--output'] !== 'undefined' ? path.resolve(options['--output']) : path.resolve(options['-o'])
+if (typeof options['--output'] !== 'undefined') {
+  const dir = path.resolve(options['--output'])
   if (fs.existsSync(dir) && fs.lstatSync(dir).isDirectory()) {
     output_path = dir
   } else {
