@@ -1,9 +1,10 @@
 const { green } = require('kleur')
 const teardown = require('./teardown')
 
-module.exports = async (page, name, open_pages, browser) => {
+module.exports = async (params) => {
+  let [ page, name ] = params
+  console.log(green('[done] ' + name))
   await page.close()
   open_pages--
-  await teardown(open_pages, browser)
-  console.log(green('[done] ' + name))
+  await teardown()
 }

@@ -1,7 +1,7 @@
 const path = require('path')
 const checkFunction = require('../check-function')
 
-module.exports = async (browser, open_pages, url, output_path, no_cli_flags, options_keys) => {
+module.exports = async () => {
   if (no_cli_flags || options_keys.includes('--crtsh')) {
     const name = 'crt.sh'
     async function tryBlock(page) {
@@ -10,6 +10,6 @@ module.exports = async (browser, open_pages, url, output_path, no_cli_flags, opt
       await page.waitFor(1000)
       await page.pdf({ path: path.resolve(output_path, './crtsh.pdf'), format: 'A4', printBackground: true })
     }
-    await checkFunction(name, tryBlock, browser, open_pages)
+    await checkFunction(name, tryBlock)
   }
 }
