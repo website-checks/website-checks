@@ -14,3 +14,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --httpobservatory
+  Runs the HTTP Observsatory check
+`

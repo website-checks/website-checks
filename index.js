@@ -6,12 +6,11 @@ const urlCheck = require('./modules/url-check')
 const createFolders = require('./modules/create-folders')
 const setup = require('./modules/setup')
 const checks = require('./modules/checks')
-
-global.url = process.argv[2]
+const cliHelp = require('./modules/cli-help')
 
 console.log(pkg.name + ' ' + pkg.version)
-urlCheck()
 
+global.url = process.argv[2]
 global.options = options
 global.options_keys = options_keys
 global.puppeteer = puppeteer
@@ -20,6 +19,8 @@ global.output_path = '.'
 global.browser
 global.open_pages = 0
 
+cliHelp()
+urlCheck()
 createFolders()
 
 async function runChecks() {

@@ -24,3 +24,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --ssllabs
+  Runs the SSLLabs check
+`

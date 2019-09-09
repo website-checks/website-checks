@@ -24,3 +24,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --ssldecoder
+  Runs the SSLDecoder check
+`
