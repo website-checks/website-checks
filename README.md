@@ -22,6 +22,9 @@ npm i -g danielruf/website-checks
 yarn global add danielruf/website-checks
 ```
 
+Only the current master an LTS releases of NodeJS are tested.  
+NodeJS >=10.12.0 is recommended.
+
 ## Usage
 
 `website-checks example.com`
