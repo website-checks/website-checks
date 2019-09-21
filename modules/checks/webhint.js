@@ -20,3 +20,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --webhint
+  Runs the webhint check
+`

@@ -13,3 +13,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --hstspreloadcheck
+  Runs the HSTS Preload Check check
+`

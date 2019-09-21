@@ -16,3 +16,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --psi
+  Runs the PageSpeed Insights check
+`

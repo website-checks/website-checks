@@ -16,3 +16,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --cryptcheck
+  Runs the Cryptcheck check
+`

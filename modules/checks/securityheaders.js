@@ -12,3 +12,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --securityheaders
+  Runs the SecurityHeaders check
+`

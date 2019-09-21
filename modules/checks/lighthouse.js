@@ -17,3 +17,8 @@ module.exports = async () => {
     await checkFunction(name, tryBlock)
   }
 }
+
+module.exports.help = `
+  --lighthouse
+  Runs the Lighthouse check
+`
