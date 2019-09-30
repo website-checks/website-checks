@@ -7,7 +7,7 @@ module.exports = async () => {
     async function tryBlock(page) {
       await page._client.send('Emulation.clearDeviceMetricsOverride')
       await page.goto('https://tls.imirhil.fr/https/' + url)
-      await page.waitForFunction('!document.querySelector("meta[http-equiv=\'refresh\']")', { timeout: 30000 })
+      await page.waitForSelector('body > #flash + [class="container"]:not([id])', { timeout: 120000 })
       await page.waitForSelector('header')
       await page.evaluate(() => document.querySelector('header').style.display = 'none')
       await page.emulateMedia('screen')
