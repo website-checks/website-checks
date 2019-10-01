@@ -13,11 +13,13 @@ module.exports = async () => {
       if (linksLength) {
         for (let i = 0; i < linksLength; i++) {
           await page.goto(links[i])
-          await page.waitFor(1000)
+          await page.waitForSelector('.reportTime');
+          await page.waitFor(1000);
           await page.pdf({ path: path.resolve(output_path, './ssllabs-' + i + '.pdf'), format: 'A4', printBackground: true })
         }
       } else {
-        await page.waitFor(1000)
+        await page.waitForSelector('.reportTime');
+        await page.waitFor(1000);
         await page.pdf({ path: path.resolve(output_path, './ssllabs.pdf'), format: 'A4', printBackground: true })
       }
     }
