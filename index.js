@@ -18,6 +18,7 @@ global.no_cli_flags = !options_keys.length || (options_keys.length === 1 && opti
 global.output_path = '.'
 global.browser
 global.open_pages = 0
+global.errors = 0
 
 cliHelp()
 urlCheck()
