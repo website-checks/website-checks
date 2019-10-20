@@ -1,6 +1,6 @@
 # website-checks
 
-`website-checks` checks websites with multiple services.
+`website-checks` checks websites with multiple services and generates PDF files of the reports.
 
 These are currently:
 * crt.sh
