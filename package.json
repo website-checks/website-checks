@@ -5,18 +5,18 @@
   "description": "checks websites with multiple services",
   "scripts": {
     "test": "npm-run-all test:*",
-    "test:crtsh": "node index.js example.com --crtsh",
-    "test:cryptcheck": "node index.js example.com --cryptcheck",
-    "test:hstspreload": "node index.js example.com --hstspreload",
-    "test:httpobservatory": "node index.js example.com --httpobservatory",
-    "test:lighthouse": "node index.js example.com --lighthouse",
-    "test:psi": "node index.js example.com --psi",
-    "test:securityheaders": "node index.js example.com --securityheaders",
-    "test:ssldecoder": "node index.js example.com --ssldecoder",
-    "test:ssldecoder-fast": "node index.js example.com --ssldecoder-fast",
-    "test:ssllabs": "node index.js example.com --ssllabs",
-    "test:webbkoll": "node index.js example.com --webbkoll",
-    "test:webhint": "node index.js example.com --webhint"
+    "test:crtsh": "node index.js iana.org --crtsh",
+    "test:cryptcheck": "node index.js iana.org --cryptcheck",
+    "test:hstspreload": "node index.js iana.org --hstspreload",
+    "test:httpobservatory": "node index.js iana.org --httpobservatory",
+    "test:lighthouse": "node index.js iana.org --lighthouse",
+    "test:psi": "node index.js iana.org --psi",
+    "test:securityheaders": "node index.js iana.org --securityheaders",
+    "test:ssldecoder": "node index.js iana.org --ssldecoder",
+    "test:ssldecoder-fast": "node index.js iana.org --ssldecoder-fast",
+    "test:ssllabs": "node index.js iana.org --ssllabs",
+    "test:webbkoll": "node index.js iana.org --webbkoll",
+    "test:webhint": "node index.js iana.org --webhint"
   },
   "bin": {
     "website-checks": "./bin/website-checks.js"
