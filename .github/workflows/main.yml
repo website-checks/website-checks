@@ -131,6 +131,22 @@ jobs:
         run: yarn
       - name: run tests
         run: yarn test:ssldecoder
+  ssldecoder-fast:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        node: [ '12', '10' ]
+    name: ssldecoder-fast - Node ${{ matrix.node }} (${{ matrix.platform }})
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: install dependencies
+        run: yarn
+      - name: run tests
+        run: yarn test:ssldecoder-fast
   ssllabs:
     strategy:
       matrix:
@@ -180,3 +196,123 @@ jobs:
         run: yarn
       - name: run tests
         run: yarn test:webhint
+  crtsh_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: crtsh - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:crtsh
+  cryptcheck_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: cryptcheck - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:cryptcheck
+  hstspreload_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: hstspreload - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:hstspreload
+  httpobservatory_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: httpobservatory - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:httpobservatory
+  lighthouse_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: lighthouse - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:lighthouse
+  psi_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: psi - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:psi
+  securityheaders_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: securityheaders - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:securityheaders
+  ssldecoder_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: ssldecoder - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:ssldecoder
+  ssldecoder-fast_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: ssldecoder-fast - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:ssldecoder-fast
+  ssllabs_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: ssllabs - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:ssllabs
+  webbkoll_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: webbkoll - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:webbkoll
+  webhint_latest:
+    runs-on: ubuntu-latest
+    container: node:current
+    name: webhint - Node latest (${{ matrix.platform }})
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: run tests
+      run: yarn test:webhint
