@@ -17,7 +17,7 @@ cache:
     - node_modules
 default-script: &default-script
   script: "yarn test:${TRAVIS_JOB_NAME}"
-  node_js: "10"
+  node_js: "12"
 matrix:
   include:
     - name: "crtsh"
