@@ -1,5 +1,7 @@
 # website-checks
 
+[![Build Status](https://github.com/DanielRuf/website-checks/workflows/CI/badge.svg)](https://github.com/DanielRuf/website-checks/actions?workflow=CI)
+
 `website-checks` checks websites with multiple services and generates PDF files of the reports.
 
 These are currently:

@@ -203,7 +203,7 @@ jobs:
   crtsh_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: crtsh - Node latest (ubuntu.latest)
+    name: crtsh - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -213,7 +213,7 @@ jobs:
   cryptcheck_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: cryptcheck - Node latest (ubuntu.latest)
+    name: cryptcheck - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -223,7 +223,7 @@ jobs:
   hstspreload_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: hstspreload - Node latest (ubuntu.latest)
+    name: hstspreload - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -233,7 +233,7 @@ jobs:
   httpobservatory_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: httpobservatory - Node latest (ubuntu.latest)
+    name: httpobservatory - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -243,7 +243,7 @@ jobs:
   lighthouse_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: lighthouse - Node latest (ubuntu.latest)
+    name: lighthouse - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -253,7 +253,7 @@ jobs:
   psi_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: psi - Node latest (ubuntu.latest)
+    name: psi - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -263,7 +263,7 @@ jobs:
   securityheaders_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: securityheaders - Node latest (ubuntu.latest)
+    name: securityheaders - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -273,7 +273,7 @@ jobs:
   ssldecoder_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: ssldecoder - Node latest (ubuntu.latest)
+    name: ssldecoder - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -283,7 +283,7 @@ jobs:
   ssldecoder-fast_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: ssldecoder-fast - Node latest (ubuntu.latest)
+    name: ssldecoder-fast - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -293,7 +293,7 @@ jobs:
   ssllabs_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: ssllabs - Node latest (ubuntu.latest)
+    name: ssllabs - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -303,7 +303,7 @@ jobs:
   webbkoll_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: webbkoll - Node latest (ubuntu.latest)
+    name: webbkoll - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
@@ -313,7 +313,7 @@ jobs:
   webhint_latest:
     runs-on: ubuntu-latest
     container: node:current
-    name: webhint - Node latest (ubuntu.latest)
+    name: webhint - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
