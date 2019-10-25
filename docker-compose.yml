@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  dev:
+    environment:
+      TARGET_URL: iana.org
+    volumes:
+      - ./out:/out
+    build: .
+    cap_add: 
+      - SYS_ADMIN
+    init: true
+    
