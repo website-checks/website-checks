@@ -1,4 +1,5 @@
 const path = require('path')
+const retry = require('../retry')
 const checkFunction = require('../check-function')
 
 module.exports = async () => {
@@ -6,7 +7,7 @@ module.exports = async () => {
     const name = 'Lighthouse'
     async function tryBlock(page) {
       await page._client.send('Emulation.clearDeviceMetricsOverride')
-      await page.goto('https://lighthouse-ci.appspot.com/try')
+      await retry(() => page.goto('https://lighthouse-ci.appspot.com/try'), 1000)
       await page.type('#url', url)
       await page.click('.url-section .search-arrow')
       await page.waitForSelector('body.done', { timeout: 60000 })

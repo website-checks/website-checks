@@ -1,4 +1,5 @@
 const path = require('path')
+const retry = require('../retry')
 const checkFunction = require('../check-function')
 
 module.exports = async () => {
@@ -6,7 +7,7 @@ module.exports = async () => {
     const name = 'HSTS Preload List'
     async function tryBlock(page) {
       await page._client.send('Emulation.clearDeviceMetricsOverride')
-      await page.goto('https://hstspreload.org/?domain=' + url)
+      await retry(() => page.goto('https://hstspreload.org/?domain=' + url), 1000)
       await page.waitForSelector('#result', { timeout: 30000, visible: true })
       await page.pdf({ path: path.resolve(output_path, './hstspreload.pdf'), format: 'A4', printBackground: true })
     }
