@@ -1,4 +1,5 @@
 const path = require('path')
+const retry = require('../retry')
 const checkFunction = require('../check-function')
 
 module.exports = async () => {
@@ -6,7 +7,7 @@ module.exports = async () => {
     const name = 'PageSpeed Insights'
     async function tryBlock(page) {
       await page._client.send('Emulation.clearDeviceMetricsOverride')
-      await page.goto('https://developers.google.com/speed/pagespeed/insights/?url=' + url + '&tab=mobile')
+      await retry(() => page.goto('https://developers.google.com/speed/pagespeed/insights/?url=' + url + '&tab=mobile'), 1000)
       await page.waitForSelector('#page-speed-insights .pagespeed-results .result-tabs', { timeout: 60000 })
       await page.click('#page-speed-insights .pagespeed-results .result-tabs .goog-tab:nth-child(1)')
       await page.pdf({ path: path.resolve(output_path, './psi-mobile.pdf'), format: 'A4', printBackground: true })
