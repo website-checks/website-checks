@@ -202,7 +202,7 @@ jobs:
         run: yarn test:webhint
   crtsh_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: crtsh - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -212,7 +212,7 @@ jobs:
       run: yarn test:crtsh
   cryptcheck_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: cryptcheck - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -222,7 +222,7 @@ jobs:
       run: yarn test:cryptcheck
   hstspreload_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: hstspreload - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -232,7 +232,7 @@ jobs:
       run: yarn test:hstspreload
   httpobservatory_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: httpobservatory - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -242,7 +242,7 @@ jobs:
       run: yarn test:httpobservatory
   lighthouse_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: lighthouse - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -252,7 +252,7 @@ jobs:
       run: yarn test:lighthouse
   psi_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: psi - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -262,7 +262,7 @@ jobs:
       run: yarn test:psi
   securityheaders_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: securityheaders - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -272,7 +272,7 @@ jobs:
       run: yarn test:securityheaders
   ssldecoder_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: ssldecoder - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -282,7 +282,7 @@ jobs:
       run: yarn test:ssldecoder
   ssldecoder-fast_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: ssldecoder-fast - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -292,7 +292,7 @@ jobs:
       run: yarn test:ssldecoder-fast
   ssllabs_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: ssllabs - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -302,7 +302,7 @@ jobs:
       run: yarn test:ssllabs
   webbkoll_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: webbkoll - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
@@ -312,7 +312,7 @@ jobs:
       run: yarn test:webbkoll
   webhint_latest:
     runs-on: ubuntu-latest
-    container: node:current
+    container: node:latest
     name: webhint - Node latest (ubuntu-latest)
     steps:
     - uses: actions/checkout@v1
