@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:crtsh
   cryptcheck:
@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:cryptcheck
   hstspreload:
@@ -52,7 +52,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:hstspreload
   httpobservatory:
@@ -68,7 +68,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:httpobservatory
   lighthouse:
@@ -84,7 +84,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:lighthouse
   psi:
@@ -100,7 +100,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:psi
   securityheaders:
@@ -116,7 +116,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:securityheaders
   ssldecoder:
@@ -132,7 +132,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:ssldecoder
   ssldecoder-fast:
@@ -148,7 +148,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:ssldecoder-fast
   ssllabs:
@@ -164,7 +164,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:ssllabs
         continue-on-error: true
@@ -181,7 +181,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:webbkoll
   webhint:
@@ -197,7 +197,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: yarn
+        run: yarn --silent
       - name: run tests
         run: yarn test:webhint
 #  crtsh_latest:
@@ -207,7 +207,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:crtsh
 #  cryptcheck_latest:
@@ -217,7 +217,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:cryptcheck
 #  hstspreload_latest:
@@ -227,7 +227,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:hstspreload
 #  httpobservatory_latest:
@@ -237,7 +237,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:httpobservatory
 #  lighthouse_latest:
@@ -247,7 +247,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:lighthouse
 #  psi_latest:
@@ -257,7 +257,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:psi
 #  securityheaders_latest:
@@ -267,7 +267,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:securityheaders
 #  ssldecoder_latest:
@@ -277,7 +277,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:ssldecoder
 #  ssldecoder-fast_latest:
@@ -287,7 +287,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:ssldecoder-fast
 #  ssllabs_latest:
@@ -297,7 +297,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:ssllabs
 #  webbkoll_latest:
@@ -307,7 +307,7 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:webbkoll
 #  webhint_latest:
@@ -317,6 +317,6 @@ jobs:
 #    steps:
 #    - uses: actions/checkout@v1
 #    - name: install dependencies
-#      run: yarn
+#      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:webhint
