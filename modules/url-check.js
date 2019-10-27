@@ -5,4 +5,5 @@ module.exports = () => {
     console.log(red('No website was provided.'))
     process.exit(1)
   }
+  url = url.replace(/^https?:\/\//, '')
 }
