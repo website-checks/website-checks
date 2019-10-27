@@ -12,7 +12,7 @@ module.exports = async () => {
       await page.waitFor(1000)
       await page.waitForSelector('.scan-overview__status', { timeout: 30000, visible: true })
       await page.waitFor(1000)
-      await page.waitForFunction('document.querySelector(".scan-overview__progress-bar.end-animation")', { timeout: 240000 })
+      await page.waitForFunction('document.querySelector(".scan-overview__progress-bar.end-animation")', { timeout: 5 * 60 * 1000 })
       await page.waitFor(1000)
       await page.evaluate(() => document.querySelectorAll('.button-expand-all').forEach((el) => el.click()))
       await page.pdf({ path: path.resolve(output_path, './webhint.pdf'), format: 'A4', printBackground: true })
