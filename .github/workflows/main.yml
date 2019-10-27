@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: crtsh - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: cryptcheck - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -43,7 +43,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: hstspreload - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -59,7 +59,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: httpobservatory - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -75,7 +75,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: lighthouse - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -91,7 +91,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: psi - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -107,7 +107,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: securityheaders - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -123,7 +123,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: ssldecoder - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -139,7 +139,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: ssldecoder-fast - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -155,7 +155,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: ssllabs - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -172,7 +172,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: webbkoll - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -188,7 +188,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node: [ '12', '10' ]
+        node: [ '12' ]
     name: webhint - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
@@ -200,123 +200,123 @@ jobs:
         run: yarn
       - name: run tests
         run: yarn test:webhint
-  crtsh_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: crtsh - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:crtsh
-  cryptcheck_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: cryptcheck - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:cryptcheck
-  hstspreload_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: hstspreload - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:hstspreload
-  httpobservatory_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: httpobservatory - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:httpobservatory
-  lighthouse_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: lighthouse - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:lighthouse
-  psi_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: psi - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:psi
-  securityheaders_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: securityheaders - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:securityheaders
-  ssldecoder_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: ssldecoder - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:ssldecoder
-  ssldecoder-fast_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: ssldecoder-fast - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:ssldecoder-fast
-  ssllabs_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: ssllabs - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:ssllabs
-  webbkoll_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: webbkoll - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:webbkoll
-  webhint_latest:
-    runs-on: ubuntu-latest
-    container: node:latest
-    name: webhint - Node latest (ubuntu-latest)
-    steps:
-    - uses: actions/checkout@v1
-    - name: install dependencies
-      run: yarn
-    - name: run tests
-      run: yarn test:webhint
+#  crtsh_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: crtsh - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:crtsh
+#  cryptcheck_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: cryptcheck - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:cryptcheck
+#  hstspreload_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: hstspreload - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:hstspreload
+#  httpobservatory_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: httpobservatory - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:httpobservatory
+#  lighthouse_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: lighthouse - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:lighthouse
+#  psi_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: psi - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:psi
+#  securityheaders_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: securityheaders - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:securityheaders
+#  ssldecoder_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: ssldecoder - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:ssldecoder
+#  ssldecoder-fast_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: ssldecoder-fast - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:ssldecoder-fast
+#  ssllabs_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: ssllabs - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:ssllabs
+#  webbkoll_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: webbkoll - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:webbkoll
+#  webhint_latest:
+#    runs-on: ubuntu-latest
+#    container: node:latest
+#    name: webhint - Node latest (ubuntu-latest)
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: install dependencies
+#      run: yarn
+#    - name: run tests
+#      run: yarn test:webhint
