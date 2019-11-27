@@ -7,12 +7,12 @@ on:
     - cron:  '0 0 * * *'
 
 jobs:
-  crtsh:
+  build-binaries:
     strategy:
       matrix:
         platform: [ubuntu-latest]
         node: [ '12' ]
-    name: crtsh - Node ${{ matrix.node }} (${{ matrix.platform }})
+    name: build-binary - Node ${{ matrix.node }} (${{ matrix.platform }})
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v1
@@ -21,185 +21,205 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: install dependencies
         run: yarn --silent
-      - name: run tests
-        run: yarn test:crtsh
-  cryptcheck:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: cryptcheck - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:cryptcheck
-  hstspreload:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: hstspreload - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:hstspreload
-  httpobservatory:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: httpobservatory - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:httpobservatory
-  lighthouse:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: lighthouse - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:lighthouse
-  psi:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: psi - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:psi
-  securityheaders:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: securityheaders - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:securityheaders
-  ssldecoder:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: ssldecoder - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:ssldecoder
-  ssldecoder-fast:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: ssldecoder-fast - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:ssldecoder-fast
-  ssllabs:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: ssllabs - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:ssllabs
-        continue-on-error: true
-  webbkoll:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: webbkoll - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:webbkoll
-  webhint:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: webhint - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:webhint
+      - name: install pkg
+        run: yarn add pkg
+      - name: create binaries
+        run: yarn pkg index.js -o website-checks --targets linux,macos,win
+      - name: list files
+        run: ls -al
+  # crtsh:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: crtsh - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:crtsh
+  # cryptcheck:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: cryptcheck - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:cryptcheck
+  # hstspreload:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: hstspreload - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:hstspreload
+  # httpobservatory:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: httpobservatory - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:httpobservatory
+  # lighthouse:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: lighthouse - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:lighthouse
+  # psi:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: psi - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:psi
+  # securityheaders:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: securityheaders - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:securityheaders
+  # ssldecoder:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: ssldecoder - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:ssldecoder
+  # ssldecoder-fast:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: ssldecoder-fast - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:ssldecoder-fast
+  # ssllabs:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: ssllabs - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:ssllabs
+  #       continue-on-error: true
+  # webbkoll:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: webbkoll - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:webbkoll
+  # webhint:
+  #   strategy:
+  #     matrix:
+  #       platform: [ubuntu-latest]
+  #       node: [ '12' ]
+  #   name: webhint - Node ${{ matrix.node }} (${{ matrix.platform }})
+  #   runs-on: ${{ matrix.platform }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node }}
+  #     - name: install dependencies
+  #       run: yarn --silent
+  #     - name: run tests
+  #       run: yarn test:webhint
 #  crtsh_latest:
 #    runs-on: ubuntu-latest
 #    container: node:latest
