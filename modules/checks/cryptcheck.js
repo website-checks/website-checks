@@ -6,6 +6,7 @@ module.exports = async () => {
     const name = 'CryptCheck'
     async function tryBlock(page) {
       await page._client.send('Emulation.clearDeviceMetricsOverride')
+      // alternatively use https://cryptcheck.fr/https/
       await page.goto('https://tls.imirhil.fr/https/' + url)
       await page.waitForSelector('body > #flash + [class="container"]:not([id])', { timeout: 120000 })
       await page.waitForSelector('header')
