@@ -7,7 +7,7 @@ module.exports = async () => {
     const name = 'SSL Decoder' + (fastcheck ? ' (fast)' : '')
     async function tryBlock(page) {
       await page._client.send('Emulation.clearDeviceMetricsOverride')
-      await page.goto('https://ssldecoder.org/?host=' + url + '&fastcheck=' + (fastcheck ? '1' : '0'), { timeout: 240000 })
+      await page.goto('https://ssldecoder.daniel-ruf.de/?host=' + url + '&fastcheck=' + (fastcheck ? '1' : '0'), { timeout: 240000 })
       const links = await page.evaluate(() => [...document.querySelectorAll('#choose_endpoint a')].map(link => link.href))
       const linksLength = links.length
       if (linksLength) {
