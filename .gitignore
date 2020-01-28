@@ -3,4 +3,3 @@ node_modules
 
 .yarn/unplugged/*
 !.yarn/unplugged/.gitkeep
-.yarn/build-state.yml 
