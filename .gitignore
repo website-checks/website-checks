@@ -1,7 +1,6 @@
 node_modules
 .DS_Store
 
-.pnp.js
 .yarn/unplugged/*
 !.yarn/unplugged/.gitkeep
 .yarn/build-state.yml 
