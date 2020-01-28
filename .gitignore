@@ -2,8 +2,6 @@ node_modules
 .DS_Store
 
 .pnp.js
-.yarn/cache/*
-!.yarn/cache/.gitkeep
 .yarn/unplugged/*
 !.yarn/unplugged/.gitkeep
 .yarn/build-state.yml 
