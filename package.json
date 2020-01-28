@@ -18,9 +18,7 @@
     "test:webbkoll": "node index.js iana.org --webbkoll",
     "test:webhint": "node index.js iana.org --webhint"
   },
-  "bin": {
-    "website-checks": "./bin/website-checks.js"
-  },
+  "bin": "./bin/website-checks.js",
   "preferGlobal": true,
   "repository": {
     "type": "git",
