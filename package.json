@@ -1,6 +1,6 @@
 {
   "name": "website-checks",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "main": "index.js",
   "description": "checks websites with multiple services",
   "scripts": {
