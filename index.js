@@ -8,7 +8,12 @@ const setup = require('./modules/setup')
 const checks = require('./modules/checks')
 const cliHelp = require('./modules/cli-help')
 
-console.log(pkg.name + ' ' + pkg.version)
+let pkgName = pkg.name;
+if (pkgName.includes('/')) {
+  pkgName = pkgName.split('/')[1]
+}
+
+console.log(pkgName + ' ' + pkg.version)
 
 global.url = process.argv[2]
 global.options = options
