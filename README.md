@@ -21,9 +21,16 @@ These are currently:
 
 ### Node setup
 
+Add the following line to your `~/.npmrc` file:
 ```
-npm i -g danielruf/website-checks
-yarn global add danielruf/website-checks
+@danielruf:registry=https://npm.pkg.github.com
+```
+
+Then install the package:
+```
+yarn global add @danielruf/website-checks
+# or
+npm i -g @danielruf/website-checks
 ```
 
 Only the current master and LTS releases of NodeJS are tested.  
