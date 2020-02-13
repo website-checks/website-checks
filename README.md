@@ -21,10 +21,13 @@ These are currently:
 
 ### Node setup
 
-Add the following line to your `~/.npmrc` file:
+Add the following lines to your `~/.npmrc` file:
 ```
+//npm.pkg.github.com/:_authToken=<github-access-token>
 @danielruf:registry=https://npm.pkg.github.com
 ```
+
+You have to generate an access token for reading packages. You can generate a new one at https://github.com/settings/tokens/new.
 
 Then install the package:
 ```
