@@ -33,6 +33,13 @@ yarn global add @danielruf/website-checks
 npm i -g @danielruf/website-checks
 ```
 
+Alternatively you can use the following:
+```
+yarn global add danielruf/website-checks
+# or
+npm i -g danielruf/website-checks
+```
+
 Only the current master and LTS releases of NodeJS are tested.  
 NodeJS >=10.12.0 is recommended.
 
