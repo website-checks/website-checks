@@ -27,7 +27,7 @@ Add the following lines to your `~/.npmrc` file:
 @danielruf:registry=https://npm.pkg.github.com
 ```
 
-You have to generate an access token for reading packages. You can generate a new one at https://github.com/settings/tokens/new.
+You have to generate an access token for reading packages. To generate a new one go to https://github.com/settings/tokens/new.
 
 Then install the package:
 ```
