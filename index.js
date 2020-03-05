@@ -31,6 +31,7 @@ createFolders()
 
 async function runChecks() {
   browser = await setup()
+  checks.checkYourWebsite()
   checks.crtsh()
   checks.cryptcheck()
   checks.hstspreload()

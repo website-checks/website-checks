@@ -1,3 +1,4 @@
+const checkYourWebsite = require('./checks/check-your-website')
 const crtsh = require('./checks/crtsh')
 const cryptcheck = require('./checks/cryptcheck')
 const hstspreload = require('./checks/hstspreload')
@@ -11,6 +12,7 @@ const webbkoll = require('./checks/webbkoll')
 const webhint = require('./checks/webhint')
 
 module.exports = {
+    checkYourWebsite,
     crtsh,
     cryptcheck,
     hstspreload,
