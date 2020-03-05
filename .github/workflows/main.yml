@@ -7,6 +7,22 @@ on:
     - cron:  '0 0 * * *'
 
 jobs:
+  check-your-website:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        node: [ '12' ]
+    name: check-your-website - Node ${{ matrix.node }} (${{ matrix.platform }})
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: install dependencies
+        run: yarn --silent
+      - name: run tests
+        run: yarn test:check-your-website
   crtsh:
     strategy:
       matrix:

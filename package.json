@@ -5,6 +5,7 @@
   "description": "checks websites with multiple services",
   "scripts": {
     "test": "npm-run-all test:*",
+    "test:check-your-website": "node index.js iana.org --check-your-website",
     "test:crtsh": "node index.js iana.org --crtsh",
     "test:cryptcheck": "node index.js iana.org --cryptcheck",
     "test:hstspreload": "node index.js iana.org --hstspreload",
