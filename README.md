@@ -5,6 +5,7 @@
 `website-checks` checks websites with multiple services and generates PDF files of the reports.
 
 These are currently:
+* Check Your Website
 * crt.sh
 * CryptCheck
 * HSTS Preload List
@@ -70,6 +71,7 @@ By default all checks (except `--ssldecoder`) will run. If you want to run only 
 
 Currently the following CLI flags will run the matching checks:
 ```
+--check-your-website
 --crtsh
 --cryptcheck
 --hstspreload
