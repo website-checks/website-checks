@@ -1,5 +1,5 @@
 {
-  "name": "@danielruf/website-checks",
+  "name": "@website-checks/website-checks",
   "version": "1.19.0",
   "main": "index.js",
   "description": "checks websites with multiple services",
@@ -25,7 +25,7 @@
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DanielRuf/website-checks.git"
+    "url": "git+https://github.com/website-checks/website-checks.git"
   },
   "keywords": [
     "certificate",
@@ -44,9 +44,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DanielRuf/website-checks/issues"
+    "url": "https://github.com/website-checks/website-checks/issues"
   },
-  "homepage": "https://github.com/DanielRuf/website-checks#readme",
+  "homepage": "https://github.com/website-checks/website-checks#readme",
   "dependencies": {
     "kleur": "3.0.3",
     "puppeteer": "2.1.1"

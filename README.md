@@ -1,6 +1,6 @@
 # website-checks
 
-[![Build Status](https://github.com/DanielRuf/website-checks/workflows/CI/badge.svg)](https://github.com/DanielRuf/website-checks/actions?workflow=CI)
+[![Build Status](https://github.com/website-checks/website-checks/workflows/CI/badge.svg)](https://github.com/website-checks/website-checks/actions?workflow=CI)
 
 `website-checks` checks websites with multiple services and generates PDF files of the reports.
 
@@ -25,23 +25,23 @@ These are currently:
 Add the following lines to your `~/.npmrc` file:
 ```
 //npm.pkg.github.com/:_authToken=<github-access-token>
-@danielruf:registry=https://npm.pkg.github.com
+@website-checks:registry=https://npm.pkg.github.com
 ```
 
 You have to generate an access token for reading packages. To generate a new one go to https://github.com/settings/tokens/new.
 
 Then install the package:
 ```
-yarn global add @danielruf/website-checks
+yarn global add @website-checks/website-checks
 # or
-npm i -g @danielruf/website-checks
+npm i -g @website-checks/website-checks
 ```
 
 Alternatively you can use the following:
 ```
-yarn global add danielruf/website-checks
+yarn global add website-checks/website-checks
 # or
-npm i -g danielruf/website-checks
+npm i -g website-checks/website-checks
 ```
 
 Only the current master and LTS releases of NodeJS are tested.  
@@ -50,7 +50,7 @@ NodeJS >=10.12.0 is recommended.
 
 ### Docker setup
 
-In [docker-compose.yml](https://github.com/DanielRuf/website-checks/blob/0b11bb3f7218b732a15da5dcff93576f46c47416/docker-compose.yml#L5), modify the TARGET_URL variable to change the website. 
+In [docker-compose.yml](https://github.com/website-checks/website-checks/blob/0b11bb3f7218b732a15da5dcff93576f46c47416/docker-compose.yml#L5), modify the TARGET_URL variable to change the website. 
 
 Then run:
 ```
