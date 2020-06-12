@@ -11,7 +11,7 @@ module.exports = async () => {
       await page.type('[id="iD.Domainname"]', url)
       await page.click('#check-this')
       await page.goto('https://check-your-website.server-daten.de/?q=' + url)
-      await page.waitFor(1000)
+      await page.waitFor(10000)
       await page.waitForFunction('!document.querySelector(\'meta[http-equiv="refresh"]\')', { timeout: 340000 })
       await page.waitFor(1000)
       await page.emulateMedia('screen')
