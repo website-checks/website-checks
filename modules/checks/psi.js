@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path')
 const retry = require('../retry')
 const checkFunction = require('../check-function')

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = () => {
   let dateInstance =  new Date()
   let dateTimezoneOffset = dateInstance.getTimezoneOffset()

@@ -1,3 +1,5 @@
+'use strict';
+
 let options = process.argv.slice(3) || []
 if (process.argv[2] === '--help') {
     options.unshift('--help')
