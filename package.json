@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/website-checks/website-checks#readme",
   "dependencies": {
-    "kleur": "3.0.3",
+    "kleur": "4.0.2",
     "puppeteer": "2.1.1"
   },
   "devDependencies": {
