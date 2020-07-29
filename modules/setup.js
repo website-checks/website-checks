@@ -5,7 +5,7 @@ module.exports =  async () => {
     args: [
       '--lang=en', 
       '--disable-dev-shm-usage',
-      '--disable-gpu'
+      '--disable-gpu',
     ],
   })
 }
