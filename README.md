@@ -17,6 +17,7 @@ These are currently:
 * SSLLabs
 * webbkoll
 * webhint
+* Yellow Lab Tools
 
 ## Installation
 
@@ -84,6 +85,7 @@ Currently the following CLI flags will run the matching checks:
 --ssllabs
 --webbkoll
 --webhint
+--yellowlab
 ```
 
 For example `website-checks example.com --lighthouse --securityheaders` will run the Lighthouse and Security Headers checks.
