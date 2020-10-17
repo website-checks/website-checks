@@ -17,7 +17,8 @@
     "test:ssldecoder-fast": "node index.js iana.org --ssldecoder-fast",
     "test:ssllabs": "node index.js iana.org --ssllabs",
     "test:webbkoll": "node index.js iana.org --webbkoll",
-    "test:webhint": "node index.js iana.org --webhint"
+    "test:webhint": "node index.js iana.org --webhint",
+    "test:yellowlab": "node index.js iana.org --yellowlab"
   },
   "bin": {
     "website-checks": "./bin/website-checks.js"
