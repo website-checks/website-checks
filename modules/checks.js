@@ -10,6 +10,7 @@ const ssldecoder = require('./checks/ssldecoder')
 const ssllabs = require('./checks/ssllabs')
 const webbkoll = require('./checks/webbkoll')
 const webhint = require('./checks/webhint')
+const yellowlab = require('./checks/yellowlab')
 
 module.exports = {
     checkYourWebsite,
@@ -24,4 +25,5 @@ module.exports = {
     ssllabs,
     webbkoll,
     webhint,
+    yellowlab,
 }
