@@ -13,11 +13,11 @@ module.exports = async () => {
       if (linksLength) {
         for (let i = 0; i < linksLength; i++) {
           await page.goto(links[i], { timeout: 120000 })
-          await page.emulateMedia('screen')
+          await page.emulateMediaType('screen')
           await page.pdf({ path: path.resolve(output_path, './ssldecoder' + (fastcheck ? '-fast' : '') + '-' + (i + 1) + '.pdf'), format: 'A4', printBackground: true })
         }
       } else {
-        await page.emulateMedia('screen')
+        await page.emulateMediaType('screen')
         await page.pdf({ path: path.resolve(output_path, './ssldecoder' + (fastcheck ? '-fast' : '') + '.pdf'), format: 'A4', printBackground: true })
       }
     }
