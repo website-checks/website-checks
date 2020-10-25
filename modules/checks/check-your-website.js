@@ -16,7 +16,7 @@ module.exports = async () => {
       await page.waitFor(10000)
       await page.waitForFunction('!document.querySelector(\'meta[http-equiv="refresh"]\')', { timeout: 340000 })
       await page.waitFor(1000)
-      await page.emulateMedia('screen')
+      await page.emulateMediaType('screen')
       await page.evaluate(() => document.querySelector('#sdCookieBanner').style.display = 'none')
       await page.pdf({ path: path.resolve(output_path, './check-your-website.pdf'), format: 'A4', printBackground: true })
     }

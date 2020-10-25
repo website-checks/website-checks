@@ -216,6 +216,22 @@ jobs:
         run: yarn --silent
       - name: run tests
         run: yarn test:webhint
+  yellowlab:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        node: [ '12' ]
+    name: yellowlab - Node ${{ matrix.node }} (${{ matrix.platform }})
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: install dependencies
+        run: yarn --silent
+      - name: run tests
+        run: yarn test:yellowlab
 #  crtsh_latest:
 #    runs-on: ubuntu-latest
 #    container: node:latest

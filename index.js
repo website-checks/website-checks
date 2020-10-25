@@ -43,6 +43,7 @@ async function runChecks() {
   checks.ssllabs()
   checks.webbkoll()
   checks.webhint()
+  checks.yellowlab()
 }
 
 runChecks()
