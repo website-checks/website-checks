@@ -1,3 +1,5 @@
+'use strict';
+
 const { red } = require('kleur')
 const teardown = require('./teardown')
 

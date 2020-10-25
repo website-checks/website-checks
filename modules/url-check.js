@@ -1,3 +1,5 @@
+'use strict';
+
 const { red } = require('kleur')
 
 module.exports = () => {

@@ -1,3 +1,5 @@
+'use strict';
+
 const checkYourWebsite = require('./checks/check-your-website')
 const crtsh = require('./checks/crtsh')
 const cryptcheck = require('./checks/cryptcheck')

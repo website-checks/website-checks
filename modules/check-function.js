@@ -1,3 +1,5 @@
+'use strict';
+
 const { green } = require('kleur')
 const successHandler = require('./success-handler')
 const errorHandler = require('./error-handler')
