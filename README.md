@@ -2,8 +2,6 @@
 
 [![Build Status](https://github.com/website-checks/website-checks/workflows/CI/badge.svg)](https://github.com/website-checks/website-checks/actions?workflow=CI)
 
-**This project is looking for a new maintainer. See https://github.com/website-checks/website-checks/issues/71 for details.**
-
 `website-checks` checks websites with multiple services and generates PDF files of the reports.
 
 These are currently:
