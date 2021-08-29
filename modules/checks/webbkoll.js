@@ -9,6 +9,7 @@ module.exports = async () => {
     async function tryBlock(page) {
       await page._client.send('Emulation.clearDeviceMetricsOverride')
       await page.goto('https://webbkoll.dataskydd.net/en/check?url=' + url + '&refresh=on')
+      await page.click("form.search-bar button");
       await page.waitForFunction('window.location.href.startsWith("https://webbkoll.dataskydd.net/en/results")', { timeout: 240000 })
       await page.pdf({ path: path.resolve(output_path, './webbkoll.pdf'), format: 'A4', printBackground: true })
     }
