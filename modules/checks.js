@@ -8,7 +8,6 @@ const httpobservatory = require('./checks/httpobservatory')
 const lighthouse = require('./checks/lighthouse')
 const psi = require('./checks/psi')
 const securityheaders = require('./checks/securityheaders')
-const ssldecoder = require('./checks/ssldecoder')
 const ssllabs = require('./checks/ssllabs')
 const webbkoll = require('./checks/webbkoll')
 const webhint = require('./checks/webhint')
@@ -23,7 +22,6 @@ module.exports = {
     lighthouse,
     psi,
     securityheaders,
-    ssldecoder,
     ssllabs,
     webbkoll,
     webhint,

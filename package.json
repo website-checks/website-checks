@@ -13,8 +13,6 @@
     "test:lighthouse": "node index.js iana.org --lighthouse",
     "test:psi": "node index.js iana.org --psi",
     "test:securityheaders": "node index.js iana.org --securityheaders",
-    "test:ssldecoder": "node index.js iana.org --ssldecoder",
-    "test:ssldecoder-fast": "node index.js iana.org --ssldecoder-fast",
     "test:ssllabs": "node index.js iana.org --ssllabs",
     "test:webbkoll": "node index.js iana.org --webbkoll",
     "test:webhint": "node index.js iana.org --webhint",

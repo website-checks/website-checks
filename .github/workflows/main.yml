@@ -135,38 +135,6 @@ jobs:
         run: yarn --silent
       - name: run tests
         run: yarn test:securityheaders
-  ssldecoder:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: ssldecoder - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:ssldecoder
-  ssldecoder-fast:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: ssldecoder-fast - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:ssldecoder-fast
   ssllabs:
     strategy:
       matrix:
@@ -302,26 +270,6 @@ jobs:
 #      run: yarn --silent
 #    - name: run tests
 #      run: yarn test:securityheaders
-#  ssldecoder_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: ssldecoder - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:ssldecoder
-#  ssldecoder-fast_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: ssldecoder-fast - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:ssldecoder-fast
 #  ssllabs_latest:
 #    runs-on: ubuntu-latest
 #    container: node:latest
