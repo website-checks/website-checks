@@ -1,6 +1,10 @@
 # website-checks
 
 [![Build Status](https://github.com/website-checks/website-checks/workflows/CI/badge.svg)](https://github.com/website-checks/website-checks/actions?workflow=CI)
+![npm (tag)](https://img.shields.io/npm/v/@website-checks/website-checks/latest)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/MyIsaak/website-checks/graphs/commit-activity)
+[![Downloads Total](https://img.shields.io/npm/dt/@website-checks/website-checks.svg)](https://www.npmjs.com/package/@website-checks/website-checks)
+[![Downloads Month](https://img.shields.io/npm/dm/@website-checks/website-checks)](https://www.npmjs.com/package/@website-checks/website-checks)
 
 `website-checks` checks websites with multiple services and generates PDF files of the reports.
 
