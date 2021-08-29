@@ -68,8 +68,6 @@ Only Docker Engine versions 18.06.0+ are supported since the Docker Compose file
 `website-checks example.com --output pdf` would save all PDF files to the local `pdf` directory.
 
 ### CLI flags
-By default all checks (except `--ssldecoder`) will run. If you want to run only specific checks you can add CLI flags.
-
 Currently the following CLI flags will run the matching checks:
 ```
 --check-your-website
@@ -80,8 +78,6 @@ Currently the following CLI flags will run the matching checks:
 --lighthouse
 --psi
 --securityheaders
---ssldecoder
---ssldecoder-fast
 --ssllabs
 --webbkoll
 --webhint

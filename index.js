@@ -39,7 +39,6 @@ async function runChecks() {
   checks.lighthouse()
   checks.psi()
   checks.securityheaders()
-  checks.ssldecoder()
   checks.ssllabs()
   checks.webbkoll()
   checks.webhint()
