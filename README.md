@@ -13,7 +13,6 @@ These are currently:
 * Lighthouse
 * PageSpeed Insights
 * Security Headers
-* SSL Decoder
 * SSLLabs
 * webbkoll
 * webhint
@@ -23,26 +22,11 @@ These are currently:
 
 ### Node setup
 
-Add the following lines to your `~/.npmrc` file:
-```
-//npm.pkg.github.com/:_authToken=<github-access-token>
-@website-checks:registry=https://npm.pkg.github.com
-```
-
-You have to generate an access token for reading packages. To generate a new one go to https://github.com/settings/tokens/new.
-
-Then install the package:
+Install the package:
 ```
 yarn global add @website-checks/website-checks
 # or
 npm i -g @website-checks/website-checks
-```
-
-Alternatively you can use the following:
-```
-yarn global add website-checks/website-checks
-# or
-npm i -g website-checks/website-checks
 ```
 
 Only the current master and LTS releases of NodeJS are tested.  
