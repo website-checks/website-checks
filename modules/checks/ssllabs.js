@@ -16,12 +16,12 @@ module.exports = async () => {
         for (let i = 0; i < linksLength; i++) {
           await page.goto(links[i])
           await page.waitForSelector('.reportTime', { timeout: 5 * 60 * 1000 });
-          await page.waitFor(1000);
+          await page.waitForTimeout(1000);
           await page.pdf({ path: path.resolve(output_path, './ssllabs-' + i + '.pdf'), format: 'A4', printBackground: true })
         }
       } else {
         await page.waitForSelector('.reportTime', { timeout: 5 * 60 * 1000 });
-        await page.waitFor(1000);
+        await page.waitForTimeout(1000);
         await page.pdf({ path: path.resolve(output_path, './ssllabs.pdf'), format: 'A4', printBackground: true })
       }
     }
