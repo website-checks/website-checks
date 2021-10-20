@@ -16,7 +16,7 @@ if (pkgName.includes('/')) {
 console.log(pkgName + ' ' + pkg.version)
 
 global.url = process.argv[2]
-// Webhint cannot analyze URLs without the protocol, so we save this becase later on we strip the protocol from url
+// Webhint cannot analyze URLs without the protocol, so we save this because later on we strip the protocol from the URL
 global.originalUrl = process.argv[2]
 global.options = options
 global.options_keys = options_keys
