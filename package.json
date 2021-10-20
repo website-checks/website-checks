@@ -15,7 +15,7 @@
     "test:securityheaders": "node index.js iana.org --securityheaders",
     "test:ssllabs": "node index.js iana.org --ssllabs",
     "test:webbkoll": "node index.js iana.org --webbkoll",
-    "test:webhint": "node index.js iana.org --webhint",
+    "test:webhint": "node index.js https://iana.org --webhint",
     "test:yellowlab": "node index.js iana.org --yellowlab"
   },
   "bin": {
@@ -51,6 +51,7 @@
     "puppeteer": "5.3.1"
   },
   "devDependencies": {
+    "hint": "^6.1.4",
     "npm-run-all": "^4.1.5"
   },
   "engines": {
