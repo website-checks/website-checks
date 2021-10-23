@@ -10,7 +10,7 @@ module.exports = async () => {
       await page.goto('https://yellowlab.tools/', { timeout: 240000, waitUntil: "domcontentloaded" })
       await page.type(".url", url)
       await page.click(".launchBtn")
-      await page.waitFor(".globalGrade", { timeout: 240000 })
+      await page.waitForTimeout(".globalGrade", { timeout: 240000 })
       await page.pdf({ path: path.resolve(output_path, './yellow-lab-overview.pdf'), format: 'A4', printBackground: true })
       const categoryLength = await page.$$eval('div[ng-repeat="categoryKey in categoriesOrder"]', divs => divs.length)
       for (let i_cat = 1; i_cat <= categoryLength; i_cat++) {
@@ -20,10 +20,10 @@ module.exports = async () => {
           const className = `div[ng-repeat="categoryKey in categoriesOrder"]:nth-of-type(${i_cat}) a:nth-of-type(${j_link})`
           const linkName = await page.$eval(className, div => div.innerText.split("\t")[1].replace("/", " or ").replace(" ", "-"))
           await page.click(className)
-          await page.waitFor(".ruleTable", { timeout: 240000 })
+          await page.waitForTimeout(".ruleTable", { timeout: 240000 })
           await page.pdf({ path: path.resolve(output_path, `./yellow-lab-${categoryName}-${linkName}.pdf`), format: 'A4', printBackground: true })
           await page.goBack()
-          await page.waitFor(".globalGrade", { timeout: 240000 })
+          await page.waitForTimeout(".globalGrade", { timeout: 240000 })
         }
       }
     }
