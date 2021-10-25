@@ -30,8 +30,22 @@ module.exports = async () => {
     const name = 'webhint'
     async function tryBlock(page) {
       const reportFilePath = path.join(output_path, `/${urlToWebhintFilename(url)}.html`)
-      // Webhint cannot analyze URLs without the protocol, so we use the originalUrl
-      const results = await webhint.analyze(originalUrl)
+      /**
+       * Because webhint requires the protocol to be present in the URL,
+       * and we are stripping it intentionally, we have to add it back in before
+       * calling on webhint to analyze it. Since we don't know 100% if the website
+       * supports HTTPS or not, we need to try/catch both https and http.
+       */
+      let results
+      try {
+        results = await webhint.analyze(`https://${url}`)
+      } catch {
+        try {
+          results = await webhint.analyze(`http://${url}`)
+        } catch {
+          throw new TypeError(`Invalid URL: ${url}`)
+        }
+      }
       await webhint.format(results[0].problems, { output: output_path, target: url })
       await page._client.send('Emulation.clearDeviceMetricsOverride')
       const content = await fs.readFile(path.join(process.cwd(), reportFilePath), 'utf8')
