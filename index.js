@@ -37,6 +37,7 @@ async function runChecks() {
   checks.hstspreload()
   checks.httpobservatory()
   checks.lighthouse()
+  checks.pingdom();
   checks.psi()
   checks.securityheaders()
   checks.ssllabs()
