@@ -9,18 +9,18 @@
 `website-checks` checks websites with multiple services and generates PDF files of the reports.
 
 These are currently:
-* Check Your Website
-* crt.sh
-* CryptCheck
-* HSTS Preload List
-* HTTP Observatory
-* Lighthouse
-* PageSpeed Insights
-* Security Headers
-* SSLLabs
-* webbkoll
-* webhint
-* Yellow Lab Tools
+* [Check Your Website](https://check-your-website.server-daten.de)
+* [crt.sh](https://crt.sh/)
+* [CryptCheck](https://tls.imirhil.fr)
+* [HSTS Preload List](https://hstspreload.org)
+* [HTTP Observatory](https://observatory.mozilla.org)
+* [Lighthouse](https://lighthouse-ci.appspot.com)
+* [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)
+* [Security Headers](https://securityheaders.com)
+* [SSLLabs](https://www.ssllabs.com/ssltest/analyze.html)
+* [webbkoll](https://webbkoll.dataskydd.net)
+* [webhint](https://webhint.io/)
+* [Yellow Lab Tools](https://yellowlab.tools/)
 
 ## Installation
 
