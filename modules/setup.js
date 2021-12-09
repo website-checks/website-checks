@@ -2,7 +2,7 @@
 
 module.exports =  async () => {
   return await puppeteer.launch({
-    headless: true, 
+    headless: !process.argv.includes("--no-headless"), 
     // slowMo: 1000,
     args: [
       '--lang=en', 
