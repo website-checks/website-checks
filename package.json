@@ -11,6 +11,7 @@
     "test:hstspreload": "node index.js iana.org --hstspreload",
     "test:httpobservatory": "node index.js iana.org --httpobservatory",
     "test:lighthouse": "node index.js iana.org --lighthouse",
+    "test:pingdom": "node index.js iana.org --pingdom",
     "test:psi": "node index.js iana.org --psi",
     "test:securityheaders": "node index.js iana.org --securityheaders",
     "test:ssllabs": "node index.js iana.org --ssllabs",

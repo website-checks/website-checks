@@ -103,6 +103,22 @@ jobs:
         run: yarn --silent
       - name: run tests
         run: yarn test:lighthouse
+  pingdom:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        node: [ '12' ]
+    name: pingdom - Node ${{ matrix.node }} (${{ matrix.platform }})
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: install dependencies
+        run: yarn --silent
+      - name: run tests
+        run: yarn test:pingdom
   psi:
     strategy:
       matrix:

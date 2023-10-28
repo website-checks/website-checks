@@ -6,6 +6,7 @@ const cryptcheck = require('./checks/cryptcheck')
 const hstspreload = require('./checks/hstspreload')
 const httpobservatory = require('./checks/httpobservatory')
 const lighthouse = require('./checks/lighthouse')
+const pingdom = require('./checks/pingdom')
 const psi = require('./checks/psi')
 const securityheaders = require('./checks/securityheaders')
 const ssllabs = require('./checks/ssllabs')
@@ -20,6 +21,7 @@ module.exports = {
     hstspreload,
     httpobservatory,
     lighthouse,
+    pingdom,
     psi,
     securityheaders,
     ssllabs,
