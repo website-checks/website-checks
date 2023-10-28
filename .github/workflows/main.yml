@@ -35,4 +35,9 @@ jobs:
       - name: Run test with name ${{ matrix.testName }}
         run: yarn test:${{ matrix.testName }}
         continue-on-error: false
-  
+      - name: Save PDF artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: "iana.org/*/*.pdf"
+
