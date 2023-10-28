@@ -1,4 +1,4 @@
-FROM node:13-alpine as base
+FROM node:14-alpine as base
 
 LABEL maintainer="Isaak Eriksson <isaak.eriksson@gmail.com>"
 
