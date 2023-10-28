@@ -7,6 +7,21 @@ on:
 jobs:
   test-template:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        testName:
+          - 'check-your-website'
+          - 'crtsh'
+          - 'cryptcheck'
+          - 'ssllabs'
+          - 'hstspreload'
+          - 'httpobservatory'
+          - 'lighthouse'
+          - 'psi'
+          - 'securityheaders'
+          - 'webbkoll'
+          - 'webhint'
+          - 'yellowlab'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -14,58 +29,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14
-          cache: 'npm'
+          cache: 'yarn'
       - name: Install dependencies
         run: yarn --silent
-      - name: Run tests
+      - name: Run test with name ${{ matrix.testName }}
         run: yarn test:${{ matrix.testName }}
         continue-on-error: false
-        
-  check-your-website:
-    strategy:
-      matrix:
-        testName: 'check-your-website'
-  crtsh:
-    strategy:
-      matrix:
-        testName: 'crtsh'
-  cryptcheck:
-    strategy:
-      matrix:
-        testName: 'cryptcheck'
-  ssllabs:
-    strategy:
-      matrix:
-        testName: 'ssllabs'
-  hstspreload:
-    strategy:
-      matrix:
-        testName: 'hstspreload'
-  httpobservatory:
-    strategy:
-      matrix:
-        testName: 'httpobservatory'
-  lighthouse:
-    strategy:
-      matrix:
-        testName: 'lighthouse'
-  psi:
-    strategy:
-      matrix:
-        testName: 'psi'
-  securityheaders:
-    strategy:
-      matrix:
-        testName: 'securityheaders'
-  webbkoll:
-    strategy:
-      matrix:
-        testName: 'webbkoll'
-  webhint:
-    strategy:
-      matrix:
-        testName: 'webhint'
-  yellowlab:
-    strategy:
-      matrix:
-        testName: 'yellowlab'
+  
