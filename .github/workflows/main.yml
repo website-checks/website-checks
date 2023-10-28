@@ -3,316 +3,68 @@ name: CI
 on:
   push:
   pull_request:
-  #schedule:
-  #  - cron:  '0 0 * * *'
 
 jobs:
+  test-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: yarn --silent
+      - name: Run tests
+        run: yarn test:${{ matrix.testName }}
+        continue-on-error: false
+        
   check-your-website:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: check-your-website - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:check-your-website
+        testName: 'check-your-website'
   crtsh:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: crtsh - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:crtsh
+        testName: 'crtsh'
   cryptcheck:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: cryptcheck - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:cryptcheck
-  hstspreload:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: hstspreload - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:hstspreload
-  httpobservatory:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: httpobservatory - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:httpobservatory
-  lighthouse:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: lighthouse - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:lighthouse
-  pingdom:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: pingdom - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:pingdom
-  psi:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: psi - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:psi
-  securityheaders:
-    strategy:
-      matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: securityheaders - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:securityheaders
+        testName: 'cryptcheck'
   ssllabs:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: ssllabs - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:ssllabs
-        continue-on-error: true
+        testName: 'ssllabs'
+  hstspreload:
+    strategy:
+      matrix:
+        testName: 'hstspreload'
+  httpobservatory:
+    strategy:
+      matrix:
+        testName: 'httpobservatory'
+  lighthouse:
+    strategy:
+      matrix:
+        testName: 'lighthouse'
+  psi:
+    strategy:
+      matrix:
+        testName: 'psi'
+  securityheaders:
+    strategy:
+      matrix:
+        testName: 'securityheaders'
   webbkoll:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: webbkoll - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:webbkoll
+        testName: 'webbkoll'
   webhint:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: webhint - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:webhint
+        testName: 'webhint'
   yellowlab:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node: [ '12' ]
-    name: yellowlab - Node ${{ matrix.node }} (${{ matrix.platform }})
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-      - name: install dependencies
-        run: yarn --silent
-      - name: run tests
-        run: yarn test:yellowlab
-#  crtsh_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: crtsh - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:crtsh
-#  cryptcheck_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: cryptcheck - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:cryptcheck
-#  hstspreload_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: hstspreload - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:hstspreload
-#  httpobservatory_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: httpobservatory - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:httpobservatory
-#  lighthouse_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: lighthouse - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:lighthouse
-#  psi_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: psi - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:psi
-#  securityheaders_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: securityheaders - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:securityheaders
-#  ssllabs_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: ssllabs - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:ssllabs
-#  webbkoll_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: webbkoll - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:webbkoll
-#  webhint_latest:
-#    runs-on: ubuntu-latest
-#    container: node:latest
-#    name: webhint - Node latest (ubuntu-latest)
-#    steps:
-#    - uses: actions/checkout@v1
-#    - name: install dependencies
-#      run: yarn --silent
-#    - name: run tests
-#      run: yarn test:webhint
+        testName: 'yellowlab'
