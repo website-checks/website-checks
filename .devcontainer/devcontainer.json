@@ -1,0 +1,13 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "14",
+      "nvmVersion": "latest"
+    },
+    "ghcr.io/kreemer/features/chrometesting:1": {
+      "version": "Stable"
+    }
+  }
+}
