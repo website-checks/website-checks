@@ -8,6 +8,7 @@ module.exports =  async () => {
       '--lang=en', 
       '--disable-dev-shm-usage',
       '--disable-gpu',
+      '--no-sandbox' // Assuming we run dev containers on the cloud, this should be safe.
     ],
   })
 }
